@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Ellipse.API/Ellipse.API.csproj" />
+  <Project Path="Ellipse.Core/Ellipse.Core.csproj" />
+  <Project Path="Ellipse.Data/Ellipse.Data.csproj" />
+  <Project Path="Ellipse.Shared/Ellipse.Shared.csproj" />
+  <Project Path="Ellipse.UI/Ellipse.UI.csproj" Id="1ba24aa5-1103-4ae5-9884-6d1d1194a02f" />
+</Solution>
