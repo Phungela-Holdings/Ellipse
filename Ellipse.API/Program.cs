@@ -1,3 +1,5 @@
+using Ellipse.Core.Extensions;
+
 
 namespace Ellipse.API
 {
@@ -12,6 +14,7 @@ namespace Ellipse.API
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            builder.Services.AddDbContext(builder.Configuration);
 
             var app = builder.Build();
 

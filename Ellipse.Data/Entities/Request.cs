@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Ellipse.Data.Entities
+﻿namespace Ellipse.Data.Entities
 {
     public class Request
     {
@@ -15,9 +11,6 @@ namespace Ellipse.Data.Entities
         public DateTime EndDate { get; set; }
 
         public DateTime RequestedDate { get; set; }
-
-        public Int64 MyProperty { get; set; }
-
 
     }
 }
