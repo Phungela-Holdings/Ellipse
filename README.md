@@ -1,3 +1,9 @@
+## Branching strategy
+* Create a feature banch
+* Add your changes
+* Create a pull request to many branch
+* Check for pull request comments
+
 To add migrations run the following command
 
 ```bat
