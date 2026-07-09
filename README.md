@@ -30,4 +30,8 @@ Before you run the EF commands for the first time, please run the following comm
 dotnet tool install --global dotnet-ef
 ```
 
-Make sure you are in the Ellipse.Data directory whenever you run commands for the database
+Make sure you are in the Ellipse.Data directory whenever you run commands for the database. 
+
+```bat
+cd .\Ellipse.Data\
+```
