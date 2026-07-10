@@ -8,5 +8,7 @@ namespace Ellipse.Data
         public EllipseDbContext(DbContextOptions<EllipseDbContext> options) : base(options) { }
 
         public DbSet<Request> Requests { get; set; }
+        public DbSet<DocumentAduit> DocumentAduits { get; set; }
+
     }
 }
