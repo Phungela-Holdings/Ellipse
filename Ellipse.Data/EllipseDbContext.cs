@@ -11,6 +11,8 @@ namespace Ellipse.Data
         }
 
         public DbSet<Request> Requests { get; set; }
+        public DbSet<DocumentAduit> DocumentAduits { get; set; }
+
 
         public DbSet<Contractor> Contractors { get; set; }
 
