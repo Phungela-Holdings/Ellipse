@@ -12,5 +12,7 @@
 
         public DateTime RequestedDate { get; set; }
 
+        public string FirstName { get; set; }
+
     }
 }
