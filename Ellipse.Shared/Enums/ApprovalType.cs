@@ -13,3 +13,4 @@ namespace Ellipse.Shared.Enums
         ICTManager = 5
     }
 }
+
