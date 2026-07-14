@@ -26,7 +26,7 @@ namespace Ellipse.API.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogWarning(ex, "An error occurred while retrieving requests.");
                 throw;
             }
         }
