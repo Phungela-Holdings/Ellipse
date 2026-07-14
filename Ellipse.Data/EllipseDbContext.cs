@@ -8,5 +8,13 @@ namespace Ellipse.Data
         public EllipseDbContext(DbContextOptions<EllipseDbContext> options) : base(options) { }
 
         public DbSet<Request> Requests { get; set; }
+        public DbSet<Contractor> Contractors { get; set; }
+        public DbSet<RequestApproval> RequestApprovals { get; set; }
+
     }
 }
+
+//   cd .\Ellipse.Data\
+//   dotnet ef migrations add makeApproveTypeEnum --project ..\Ellipse.Data\ --startup-project  ..\Ellipse.API\
+//   dotnet ef database update --project ..\Ellipse.Data\ --startup-project  ..\Ellipse.API\
+

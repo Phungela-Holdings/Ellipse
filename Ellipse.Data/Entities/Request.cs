@@ -48,6 +48,6 @@ namespace Ellipse.Data.Entities
 
         [Required]
         [StringLength(50)]
-        public string UserType { get; set; }
+        public string UserType { get; set; } 
     }
 }
