@@ -5,6 +5,7 @@ namespace Ellipse.Data.Entities
 {
     public class Request
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -12,7 +13,7 @@ namespace Ellipse.Data.Entities
 
         public DateTime StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public DateTime RequestedDate { get; set; }
 
