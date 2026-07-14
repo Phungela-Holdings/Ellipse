@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ellipse.Data.Migrations
 {
     [DbContext(typeof(EllipseDbContext))]
-    [Migration("20260714064843_UseApprovalTypeEnum")]
+    [Migration("20260714073156_UseApprovalTypeEnum")]
     partial class UseApprovalTypeEnum
     {
         /// <inheritdoc />
