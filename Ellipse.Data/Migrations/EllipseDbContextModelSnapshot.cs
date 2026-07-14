@@ -76,28 +76,29 @@ namespace Ellipse.Data.Migrations
 
             modelBuilder.Entity("Ellipse.Data.Entities.Document", b =>
                 {
-                    b.Property<int>("DocumentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocumentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Archived")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("Archived_Date")
+                    b.Property<DateTime?>("ArchivedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("Data")
-                        .HasColumnType("tinyint");
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<DateTime>("Date_Modified")
+                    b.Property<DateTime?>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Date_Uplouded")
+                    b.Property<DateTime>("DateUplouded")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Document_Type")
+                    b.Property<string>("DocumentType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -107,18 +108,15 @@ namespace Ellipse.Data.Migrations
                     b.Property<int>("RequestId")
                         .HasColumnType("int");
 
-                    b.HasKey("DocumentId");
+                    b.HasKey("Id");
 
                     b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("Ellipse.Data.Entities.Employee", b =>
                 {
-                    b.Property<int>("EmployeeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"));
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ActiveDirectortyUsername")
                         .IsRequired()
@@ -128,7 +126,7 @@ namespace Ellipse.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Contact_Number")
+                    b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -140,11 +138,7 @@ namespace Ellipse.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email_Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("First_Name")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -154,7 +148,7 @@ namespace Ellipse.Data.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Service_Number")
+                    b.Property<string>("ServiceNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -162,7 +156,7 @@ namespace Ellipse.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EmployeeId");
+                    b.HasKey("EmailAddress");
 
                     b.ToTable("Employees");
                 });
