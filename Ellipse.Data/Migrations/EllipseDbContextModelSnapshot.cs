@@ -110,7 +110,65 @@ namespace Ellipse.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RequestId");
+
                     b.ToTable("Documents");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAccess", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccessedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAccessed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DocumentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("DocumentAccesses");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAudit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AuditType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("DocumentData")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("DocumentId")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("OldDocumentData")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("DocumentAudits");
                 });
 
             modelBuilder.Entity("Ellipse.Data.Entities.Employee", b =>
@@ -161,35 +219,6 @@ namespace Ellipse.Data.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAduit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AuditType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte>("DocumentData")
-                        .HasColumnType("tinyint");
-
-                    b.Property<int>("DocumentId")
-                        .HasColumnType("int");
-
-                    b.Property<byte>("OldDocumentData")
-                        .HasColumnType("tinyint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DocumentAduits");
-                });
-
             modelBuilder.Entity("Ellipse.Data.Entities.Request", b =>
                 {
                     b.Property<int>("Id")
@@ -207,12 +236,18 @@ namespace Ellipse.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ContractId")
+                        .HasColumnType("int");
+
                     b.Property<string>("EllipsePosition")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("EllipseUserId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("EmployeeEmail")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -227,10 +262,6 @@ namespace Ellipse.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RequestType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -258,6 +289,10 @@ namespace Ellipse.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("EmployeeEmail");
 
                     b.ToTable("Requests");
                 });
@@ -300,6 +335,54 @@ namespace Ellipse.Data.Migrations
                     b.ToTable("RequestApprovals");
                 });
 
+            modelBuilder.Entity("Ellipse.Data.Entities.Document", b =>
+                {
+                    b.HasOne("Ellipse.Data.Entities.Request", "Request")
+                        .WithMany("Documents")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Request");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAccess", b =>
+                {
+                    b.HasOne("Ellipse.Data.Entities.Document", "Document")
+                        .WithMany()
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAudit", b =>
+                {
+                    b.HasOne("Ellipse.Data.Entities.Document", "Document")
+                        .WithMany()
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.Request", b =>
+                {
+                    b.HasOne("Ellipse.Data.Entities.Contractor", "Contractor")
+                        .WithMany("Requests")
+                        .HasForeignKey("ContractId");
+
+                    b.HasOne("Ellipse.Data.Entities.Employee", "E")
+                        .WithMany("Requests")
+                        .HasForeignKey("EmployeeEmail");
+
+                    b.Navigation("Contractor");
+
+                    b.Navigation("E");
+                });
+
             modelBuilder.Entity("Ellipse.Data.Entities.RequestApproval", b =>
                 {
                     b.HasOne("Ellipse.Data.Entities.Request", "Request")
@@ -309,6 +392,21 @@ namespace Ellipse.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Request");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.Contractor", b =>
+                {
+                    b.Navigation("Requests");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.Employee", b =>
+                {
+                    b.Navigation("Requests");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.Request", b =>
+                {
+                    b.Navigation("Documents");
                 });
 #pragma warning restore 612, 618
         }
