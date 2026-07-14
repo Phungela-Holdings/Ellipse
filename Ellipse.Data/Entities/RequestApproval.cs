@@ -1,9 +1,14 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
+using System.ComponentModel.DataAnnotations;
+using Ellipse.Shared.Enums;
+
+
 namespace Ellipse.Data.Entities
 {
     public class RequestApproval
     {
+        [Key]
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -21,6 +26,6 @@ namespace Ellipse.Data.Entities
         [ForeignKey(nameof(RequestId))]
         public Request Request { get; set; }
 
-        public string ApprovalType { get; set; }
+        public ApprovalType ApprovalType { get; set; }
     }
 }

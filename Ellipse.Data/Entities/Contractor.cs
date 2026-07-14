@@ -1,7 +1,11 @@
+
+using System.ComponentModel.DataAnnotations;
+
 namespace Ellipse.Data.Entities
 {
     public class Contractor
     {
+        [Key]
         public int Id { get; set; }
 
         public string IdentificationNumber { get; set; }

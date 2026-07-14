@@ -1,5 +1,4 @@
-﻿using Ellipse.Shared.DTOs.Employee;
-using Ellipse.Shared.DTOs.Request;
+﻿using Ellipse.Shared.DTOs.Request;
 
 namespace Ellipse.Shared.Interfaces
 {

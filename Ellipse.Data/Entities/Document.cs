@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -7,15 +8,16 @@ namespace Ellipse.Data.Entities
 {
     public class Document
     {
-        public int DocumentId { get; set; }
+        [Key]
+        public int Id { get; set; }
 
-        public byte Data { get; set; }
+        public byte[] Data { get; set; }
 
-        public DateTime Date_Uplouded { get; set; }
+        public DateTime DateUplouded { get; set; }
 
-        public DateTime Date_Modified { get; set; }
+        public DateTime? DateModified { get; set; }
 
-        public string Document_Type { get; set; }
+        public string DocumentType { get; set; }
 
         public int RequestId { get; set; }
 
@@ -26,6 +28,12 @@ namespace Ellipse.Data.Entities
 
         public bool Archived { get; set; }
 
-        public DateTime Archived_Date { get; set; }
+        public DateTime? ArchivedDate { get; set; }
+
+
+
+
+
+
     }
 }
