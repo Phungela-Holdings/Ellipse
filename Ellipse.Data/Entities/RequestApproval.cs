@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Ellipse.Data.Entities
 {
     public class RequestApproval
@@ -16,6 +18,7 @@ namespace Ellipse.Data.Entities
 
         public int RequestId { get; set; }
 
+        [ForeignKey(nameof(RequestId))]
         public Request Request { get; set; }
 
         public string ApprovalType { get; set; }

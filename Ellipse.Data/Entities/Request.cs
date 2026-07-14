@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ellipse.Data.Entities
 {
@@ -49,5 +50,17 @@ namespace Ellipse.Data.Entities
         [Required]
         [StringLength(50)]
         public string UserType { get; set; }
+
+        public List<Document> Documents { get; set; }
+
+        public int? ContractId { get; set; }
+
+        [ForeignKey(nameof(ContractId))]
+        public Contractor? Contractor { get; set; }
+
+        public string? EmployeeEmail { get; set; }
+
+        [ForeignKey(nameof(EmployeeEmail))]
+        public Employee? E { get; set; }
     }
 }

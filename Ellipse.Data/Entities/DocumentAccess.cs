@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ellipse.Data.Entities
 {
@@ -10,10 +8,12 @@ namespace Ellipse.Data.Entities
 
         public int DocumentId { get; set; }
 
+        [ForeignKey(nameof(DocumentId))]
+
+        public Document Document { get; set; }
+
         public DateTime DateAccessed { get; set; }
 
         public string AccessedBy { get; set; }
-
-        
     }
 }

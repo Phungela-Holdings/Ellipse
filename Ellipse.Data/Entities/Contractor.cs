@@ -25,5 +25,7 @@ namespace Ellipse.Data.Entities
         public int BranchId { get; set; }
 
         public bool Active { get; set; }
+
+        public List<Request> Requests { get; set; }
     }
 }
