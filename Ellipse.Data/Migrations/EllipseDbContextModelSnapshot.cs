@@ -45,7 +45,7 @@ namespace Ellipse.Data.Migrations
                     b.ToTable("DocumentAccesses");
                 });
 
-            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAduit", b =>
+            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAudit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

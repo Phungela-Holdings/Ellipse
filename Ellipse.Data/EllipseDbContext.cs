@@ -16,7 +16,7 @@ namespace Ellipse.Data
         public DbSet<DocumentAccess> DocumentAccesses { get; set; }
 
         
-        public DbSet<DocumentAduit> DocumentAduits { get; set; }
+        public DbSet<DocumentAudit> DocumentAudits { get; set; }
 
 
         public DbSet<Contractor> Contractors { get; set; }

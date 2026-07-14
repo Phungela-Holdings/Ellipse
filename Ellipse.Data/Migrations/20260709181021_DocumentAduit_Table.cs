@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Ellipse.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class DocumentAduit_Table : Migration
+    public partial class DocumentAudit_Table : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DocumentAduits",
+                name: "DocumentAudits",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -25,7 +25,7 @@ namespace Ellipse.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DocumentAduits", x => x.Id);
+                    table.PrimaryKey("PK_DocumentAudits", x => x.Id);
                 });
         }
 
@@ -33,7 +33,7 @@ namespace Ellipse.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DocumentAduits");
+                name: "DocumentAudits");
         }
     }
 }

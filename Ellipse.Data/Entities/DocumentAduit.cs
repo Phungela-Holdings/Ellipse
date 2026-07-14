@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ellipse.Data.Entities
 {
-    public class DocumentAduit
+    public class DocumentAudit
     {
 
 
