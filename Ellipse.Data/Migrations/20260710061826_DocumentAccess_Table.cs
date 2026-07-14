@@ -6,26 +6,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Ellipse.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class DocumentAudit_Table : Migration
+    public partial class DocumentAccess_Table : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DocumentAudits",
+                name: "DocumentAccesses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DocumentId = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DocumentData = table.Column<byte>(type: "tinyint", nullable: false),
-                    OldDocumentData = table.Column<byte>(type: "tinyint", nullable: false)
+                    DateAccessed = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AccessedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DocumentAudits", x => x.Id);
+                    table.PrimaryKey("PK_DocumentAccesses", x => x.Id);
                 });
         }
 
@@ -33,7 +31,7 @@ namespace Ellipse.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DocumentAudits");
+                name: "DocumentAccesses");
         }
     }
 }
