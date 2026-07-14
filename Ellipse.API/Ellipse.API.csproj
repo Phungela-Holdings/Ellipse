@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ellipse.Core\Ellipse.Core.csproj" />
+    <ProjectReference Include="..\Ellipse.Shared\Ellipse.Shared.csproj" />
   </ItemGroup>
 
 </Project>
