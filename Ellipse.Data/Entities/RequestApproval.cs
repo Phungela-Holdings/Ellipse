@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Ellipse.Shared.Enums;
+
 
 namespace Ellipse.Data.Entities
 {
@@ -21,6 +23,6 @@ namespace Ellipse.Data.Entities
 
         public Request Request { get; set; }
 
-        public string ApprovalType { get; set; }
+        public ApprovalType ApprovalType { get; set; }
     }
 }
