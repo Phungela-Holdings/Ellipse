@@ -4,6 +4,7 @@ using Ellipse.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ellipse.Data.Migrations
 {
     [DbContext(typeof(EllipseDbContext))]
-    partial class EllipseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260713130654_primarykeytoDocument_Table")]
+    partial class primarykeytoDocument_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace Ellipse.Data.Migrations
                     b.ToTable("DocumentAccesses");
                 });
 
-            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAudit", b =>
+            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAduit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
