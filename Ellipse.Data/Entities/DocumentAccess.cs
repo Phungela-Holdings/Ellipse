@@ -6,14 +6,15 @@ namespace Ellipse.Data.Entities
     {
         public int Id { get; set; }
 
-        public int DocumentId { get; set; }
-
-        [ForeignKey(nameof(DocumentId))]
-
-        public Document Document { get; set; }
-
         public DateTime DateAccessed { get; set; }
 
         public string AccessedBy { get; set; }
+
+        // Foreign key
+        [ForeignKey(nameof(Document))]
+        public int DocumentId { get; set; }
+
+        // Navigation property
+        public Document Document { get; set; }
     }
 }

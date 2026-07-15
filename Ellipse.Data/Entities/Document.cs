@@ -13,7 +13,7 @@ namespace Ellipse.Data.Entities
 
         public byte[] Data { get; set; }
 
-        public DateTime DateUplouded { get; set; }
+        public DateTime DateUploaded { get; set; }
 
         public DateTime? DateModified { get; set; }
 
