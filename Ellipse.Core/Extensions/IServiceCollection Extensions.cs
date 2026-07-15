@@ -18,6 +18,7 @@ namespace Ellipse.Core.Extensions
         public static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<IRequestServices, RequestServices>();
+            services.AddScoped<IDocumentAccessService, DocumentAccessService>();
         }
     }
 }
