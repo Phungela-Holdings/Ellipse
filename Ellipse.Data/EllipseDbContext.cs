@@ -5,16 +5,17 @@ namespace Ellipse.Data
 {
     public class EllipseDbContext : DbContext
     {
-        public EllipseDbContext(DbContextOptions<EllipseDbContext> options) : base(options) { }
+        public EllipseDbContext(DbContextOptions<EllipseDbContext> options)
+            : base(options)
+        {
+        }
 
         public DbSet<Request> Requests { get; set; }
+        public DbSet<DocumentAccess> DocumentAccesses { get; set; }
+        public DbSet<DocumentAudit> DocumentAudits { get; set; }
         public DbSet<Contractor> Contractors { get; set; }
         public DbSet<RequestApproval> RequestApprovals { get; set; }
-
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }
-
-//   cd .\Ellipse.Data\
-//   dotnet ef migrations add makeApproveTypeEnum --project ..\Ellipse.Data\ --startup-project  ..\Ellipse.API\
-//   dotnet ef database update --project ..\Ellipse.Data\ --startup-project  ..\Ellipse.API\
-
