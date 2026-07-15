@@ -1,6 +1,7 @@
 ﻿using Ellipse.Shared.DTOs.Request;
 using Ellipse.Shared.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging; // fixes missing ILogger reference
 
 namespace Ellipse.API.Controllers
 {
@@ -18,11 +19,12 @@ namespace Ellipse.API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<RequestDetails>> GetRequests()
+        public async Task<ActionResult<List<RequestDetails>>> GetRequests()
         {
             try
             {
-                return await _requestServices.GetRequests();
+                var result = await _requestServices.GetRequests();
+                return Ok(result);
             }
             catch (Exception ex)
             {

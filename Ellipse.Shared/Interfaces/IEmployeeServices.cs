@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Ellipse.Shared.DTOs.Employee;
 
 namespace Ellipse.Shared.Interfaces
 {

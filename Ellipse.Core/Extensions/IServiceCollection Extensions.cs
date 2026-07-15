@@ -1,4 +1,5 @@
-﻿using Ellipse.Data;
+﻿using Ellipse.Core; // fixes missing reference to RequestServices
+using Ellipse.Data;
 using Ellipse.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
