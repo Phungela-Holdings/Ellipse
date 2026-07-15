@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ellipse.Shared.DTOs.Contract
 {
-    internal class ContractorDetails
+    public class ContractorDetails
     {
         public int Id { get; set; }
 

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
+using System.ComponentModel.DataAnnotations;
 
 namespace Ellipse.Data.Entities
 {
@@ -38,7 +39,7 @@ namespace Ellipse.Data.Entities
    
         public string Department { get; set; }
 
-    
+
         public string Branch { get; set; }
 
         public bool Active { get; set; }

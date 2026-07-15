@@ -5,5 +5,6 @@ namespace Ellipse.Shared.Interfaces
     public interface IRequestServices
     {
         Task<List<RequestDetails>> GetRequests();
+
     }
 }
