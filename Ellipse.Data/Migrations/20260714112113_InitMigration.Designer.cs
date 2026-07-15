@@ -4,6 +4,7 @@ using Ellipse.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ellipse.Data.Migrations
 {
     [DbContext(typeof(EllipseDbContext))]
-    partial class EllipseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260714112113_InitMigration")]
+    partial class InitMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -249,7 +252,7 @@ namespace Ellipse.Data.Migrations
                     b.Property<string>("EmployeeEmail")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Environment")
@@ -257,33 +260,9 @@ namespace Ellipse.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool?>("HCSystemsAdminApproved")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("HcAdminApprovalId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ICTManagerApprovalId")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("ICTManagerApproved")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("LineManagerApprovalId")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("LineManagerApproved")
-                        .HasColumnType("bit");
-
                     b.Property<string>("MenuAccess")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("MissingDocuments")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("RequestClosed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("RequestType")
                         .IsRequired()
@@ -298,21 +277,6 @@ namespace Ellipse.Data.Migrations
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TemporaryPosition")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TemporaryPostId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TrainingApprovalId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("TrainingCompletionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("TrainingVerified")
-                        .HasColumnType("bit");
 
                     b.Property<string>("UserAccessType")
                         .IsRequired()
