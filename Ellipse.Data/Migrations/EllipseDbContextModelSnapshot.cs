@@ -23,350 +23,321 @@ namespace Ellipse.Data.Migrations
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Ellipse.Data.Entities.Contractor", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                b.Property<bool>("Active")
-                    .HasColumnType("bit");
-
-                b.Property<int>("BranchId")
-                    .HasColumnType("int");
-
-                b.Property<string>("BusinessJustification")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("CompanyName")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<int>("DepartmentId")
-                    .HasColumnType("int");
-
-                b.Property<DateTime>("EndDate")
-                    .HasColumnType("datetime2");
-
-                b.Property<string>("FirstName")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("IdentificationNumber")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("ResponsibleManager")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<DateTime>("StartDate")
-                    .HasColumnType("datetime2");
-
-                b.Property<string>("Surname")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.HasKey("Id");
-
-                b.ToTable("Contractors");
-            });
-
-            modelBuilder.Entity("Ellipse.Data.Entities.Document", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                b.Property<bool>("Archived")
-                    .HasColumnType("bit");
-
-                b.Property<DateTime?>("ArchivedDate")
-                    .HasColumnType("datetime2");
-
-                b.Property<byte[]>("Data")
-                    .IsRequired()
-                    .HasColumnType("varbinary(max)");
-
-                b.Property<DateTime?>("DateModified")
-                    .HasColumnType("datetime2");
-
-                b.Property<DateTime>("DateUplouded")
-                    .HasColumnType("datetime2");
-
-                b.Property<string>("DocumentType")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<bool>("IsActive")
-                    .HasColumnType("bit");
-
-                b.Property<int>("RequestId")
-                    .HasColumnType("int");
-
-                b.HasKey("Id");
-
-                b.HasIndex("RequestId");
-
-                b.ToTable("Documents");
-            });
-
-            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAccess", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                b.Property<string>("AccessedBy")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<DateTime>("DateAccessed")
-                    .HasColumnType("datetime2");
-
-                b.Property<int>("DocumentId")
-                    .HasColumnType("int");
-
-                b.HasKey("Id");
-
-                b.HasIndex("DocumentId");
-
-                b.ToTable("DocumentAccesses");
-            });
-
-            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAudit", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                b.Property<string>("AuditType")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<DateTime>("DateCreated")
-                    .HasColumnType("datetime2");
-
-                b.Property<byte>("DocumentData")
-                    .HasColumnType("tinyint");
-
-                b.Property<int>("DocumentId")
-                    .HasColumnType("int");
-
-                b.Property<byte>("OldDocumentData")
-                    .HasColumnType("tinyint");
-
-                b.HasKey("Id");
-
-                b.HasIndex("DocumentId");
-
-                b.ToTable("DocumentAudits");
-            });
-            modelBuilder.Entity("Ellipse.Data.Entities.Employee", b =>
-            {
-                b.Property<string>("EmailAddress")
-                    .HasColumnType("nvarchar(450)");
-
-                b.Property<string>("ActiveDirectortyUsername")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("Branch")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("ContactNumber")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("Department")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("Designation")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("FirstName")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<bool>("IsActive")
-                    .HasColumnType("bit");
-
-                b.Property<int>("PostId")
-                    .HasColumnType("int");
-
-                b.Property<string>("ServiceNumber")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("Surname")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.HasKey("EmailAddress");
-
-                b.ToTable("Employees");
-            });
-
-            modelBuilder.Entity("Ellipse.Data.Entities.Request", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                b.Property<string>("AdditionalUserAccess")
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnType("nvarchar(50)");
-
-                b.Property<string>("BusinessJustification")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<int?>("ContractId")
-                    .HasColumnType("int");
-
-                b.Property<string>("EllipsePosition")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<long>("EllipseUserId")
-                    .HasColumnType("bigint");
-
-                b.Property<string>("EmployeeEmail")
-                    .HasColumnType("nvarchar(450)");
-
-                b.Property<DateTime?>("EndDate")
-                    .HasColumnType("datetime2");
-
-                b.Property<string>("Environment")
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnType("nvarchar(50)");
-
-                b.Property<bool?>("HCSystemsAdminApproved")
-                    .HasColumnType("bit");
-
-                b.Property<int?>("HcAdminApprovalId")
-                    .HasColumnType("int");
-
-                b.Property<int?>("ICTManagerApprovalId")
-                    .HasColumnType("int");
-
-                b.Property<bool?>("ICTManagerApproved")
-                    .HasColumnType("bit");
-
-                b.Property<int?>("LineManagerApprovalId")
-                    .HasColumnType("int");
-
-                b.Property<bool?>("LineManagerApproved")
-                    .HasColumnType("bit");
-
-                b.Property<string>("MenuAccess")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<bool?>("MissingDocuments")
-                    .HasColumnType("bit");
-
-                b.Property<bool?>("RequestClosed")
-                    .HasColumnType("bit");
-
-                b.Property<string>("RequestType")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<DateTime>("RequestedDate")
-                    .HasColumnType("datetime2");
-
-                b.Property<DateTime>("StartDate")
-                    .HasColumnType("datetime2");
-
-                b.Property<string>("Status")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("TemporaryPosition")
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<int?>("TemporaryPostId")
-                    .HasColumnType("int");
-
-                b.Property<int?>("TrainingApprovalId")
-                    .HasColumnType("int");
-
-                b.Property<DateTime?>("TrainingCompletionDate")
-                    .HasColumnType("datetime2");
-
-                b.Property<bool?>("TrainingVerified")
-                    .HasColumnType("bit");
-
-                b.Property<string>("UserAccessType")
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnType("nvarchar(50)");
-
-                b.Property<string>("UserType")
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnType("nvarchar(50)");
-
-                b.Property<long>("userId")
-                    .HasColumnType("bigint");
-
-                b.HasKey("Id");
-
-                    b.HasIndex("ContractId");
-
-                b.HasIndex("EmployeeEmail");
-
-                    b.ToTable("Requests");
-                });
-
-            modelBuilder.Entity("Ellipse.Data.Entities.RequestApproval", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                b.Property<DateTime>("ApprovalDate")
-                    .HasColumnType("datetime2");
-
-                b.Property<int>("ApprovalType")
-                    .HasColumnType("int");
-
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("PostId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("RequestId")
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<long>("ServiceNumber")
-                        .HasColumnType("bigint");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Branch")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BusinessJustification")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentificationNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResponsibleManager")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.ToTable("Contractors");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.Document", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Archived")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ArchivedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime?>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUplouded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DocumentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RequestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
+
+                    b.ToTable("Documents");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAccess", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccessedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAccessed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DocumentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("DocumentAccesses");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.DocumentAudit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AuditType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("DocumentData")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("DocumentId")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("OldDocumentData")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("DocumentAudits");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.Employee", b =>
+                {
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ActiveDirectortyUsername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Branch")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Designation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServiceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EmailAddress");
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("Ellipse.Data.Entities.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdditionalUserAccess")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("BusinessJustification")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ContractId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EllipsePosition")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("EllipseUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("EmployeeEmail")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Environment")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool?>("HCSystemsAdminApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("HcAdminApprovalId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ICTManagerApprovalId")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("ICTManagerApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LineManagerApprovalId")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("LineManagerApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MenuAccess")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("MissingDocuments")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("RequestClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RequestType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RequestedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TemporaryPosition")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TemporaryPostId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TrainingApprovalId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("TrainingCompletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("TrainingVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserAccessType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("userId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("EmployeeEmail");
 
                     b.ToTable("Requests");
                 });
@@ -389,94 +360,94 @@ namespace Ellipse.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PostId")
+                    b.Property<long>("PostId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("RequestId")
                         .HasColumnType("int");
 
-                b.Property<int>("RequestId")
-                    .HasColumnType("int");
+                    b.Property<long>("ServiceNumber")
+                        .HasColumnType("bigint");
 
-                b.Property<long>("ServiceNumber")
-                    .HasColumnType("bigint");
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                b.Property<string>("Surname")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                b.HasKey("Id");
-
-                b.HasIndex("RequestId");
+                    b.HasIndex("RequestId");
 
                     b.ToTable("RequestApprovals");
                 });
 
             modelBuilder.Entity("Ellipse.Data.Entities.Document", b =>
-            {
-                b.HasOne("Ellipse.Data.Entities.Request", "Request")
-                    .WithMany("Documents")
-                    .HasForeignKey("RequestId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
+                {
+                    b.HasOne("Ellipse.Data.Entities.Request", "Request")
+                        .WithMany("Documents")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                b.Navigation("Request");
-            });
+                    b.Navigation("Request");
+                });
 
             modelBuilder.Entity("Ellipse.Data.Entities.DocumentAccess", b =>
-            {
-                b.HasOne("Ellipse.Data.Entities.Document", "Document")
-                    .WithMany()
-                    .HasForeignKey("DocumentId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
+                {
+                    b.HasOne("Ellipse.Data.Entities.Document", "Document")
+                        .WithMany()
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                b.Navigation("Document");
-            });
+                    b.Navigation("Document");
+                });
 
             modelBuilder.Entity("Ellipse.Data.Entities.DocumentAudit", b =>
-            {
-                b.HasOne("Ellipse.Data.Entities.Document", "Document")
-                    .WithMany()
-                    .HasForeignKey("DocumentId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
+                {
+                    b.HasOne("Ellipse.Data.Entities.Document", "Document")
+                        .WithMany()
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                b.Navigation("Document");
-            });
+                    b.Navigation("Document");
+                });
 
             modelBuilder.Entity("Ellipse.Data.Entities.Request", b =>
-            {
-                b.HasOne("Ellipse.Data.Entities.Contractor", "Contractor")
-                    .WithMany("Requests")
-                    .HasForeignKey("ContractId");
+                {
+                    b.HasOne("Ellipse.Data.Entities.Contractor", "Contractor")
+                        .WithMany("Requests")
+                        .HasForeignKey("ContractId");
 
-                b.HasOne("Ellipse.Data.Entities.Employee", "E")
-                    .WithMany("Requests")
-                    .HasForeignKey("EmployeeEmail");
+                    b.HasOne("Ellipse.Data.Entities.Employee", "E")
+                        .WithMany("Requests")
+                        .HasForeignKey("EmployeeEmail");
 
-                b.Navigation("Contractor");
+                    b.Navigation("Contractor");
 
-                b.Navigation("E");
-            });
+                    b.Navigation("E");
+                });
 
             modelBuilder.Entity("Ellipse.Data.Entities.RequestApproval", b =>
-            {
-                b.HasOne("Ellipse.Data.Entities.Request", "Request")
-                    .WithMany()
-                    .HasForeignKey("RequestId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
+                {
+                    b.HasOne("Ellipse.Data.Entities.Request", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Request");
                 });
 
             modelBuilder.Entity("Ellipse.Data.Entities.Contractor", b =>
-            {
-                b.Navigation("Requests");
-            });
+                {
+                    b.Navigation("Requests");
+                });
 
             modelBuilder.Entity("Ellipse.Data.Entities.Employee", b =>
-            {
-                b.Navigation("Requests");
-            });
+                {
+                    b.Navigation("Requests");
+                });
 
             modelBuilder.Entity("Ellipse.Data.Entities.Request", b =>
                 {
