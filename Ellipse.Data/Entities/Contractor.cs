@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-
-using System.ComponentModel.DataAnnotations;
 
 namespace Ellipse.Data.Entities
 {
@@ -16,9 +12,7 @@ namespace Ellipse.Data.Entities
 
         public string IdentificationNumber { get; set; }
 
-    
         public string Surname { get; set; }
-
 
         public string FirstName { get; set; }
 
@@ -26,10 +20,9 @@ namespace Ellipse.Data.Entities
 
         public string CompanyName { get; set; }
 
-      
         public string ResponsibleManager { get; set; }
 
-      
+
         public string BusinessJustification { get; set; }
 
         public DateTime StartDate { get; set; }
@@ -44,6 +37,6 @@ namespace Ellipse.Data.Entities
 
         public bool Active { get; set; }
 
-       
+       public List<Request> Requests { get; set; } = new();
     }
 }

@@ -1,11 +1,7 @@
-﻿using Ellipse.Shared.Enums;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-using System.ComponentModel.DataAnnotations;
 using Ellipse.Shared.Enums;
-
 
 namespace Ellipse.Data.Entities
 {
