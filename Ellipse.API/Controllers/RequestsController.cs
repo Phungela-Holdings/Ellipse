@@ -28,8 +28,8 @@ namespace Ellipse.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to retrieve requests.");
-                return StatusCode(500, "An error occurred while retrieving requests.");
+                _logger.LogWarning(ex, "An error occurred while retrieving requests.");
+                throw;
             }
         }
     }

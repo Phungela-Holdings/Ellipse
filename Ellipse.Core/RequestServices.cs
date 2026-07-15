@@ -1,4 +1,5 @@
-﻿using Ellipse.Data;
+﻿using Ellipse.Core.Extensions;
+using Ellipse.Data;
 using Ellipse.Shared.DTOs.Request;
 using Ellipse.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +19,7 @@ namespace Ellipse.Core
         {
             var requests = await _context.Requests.ToListAsync();
 
-            return requests.Select(r => new RequestDetails
-            {
-                // TODO: map fields, e.g.
-                // Id = r.Id,
-                // Title = r.Title,
-            }).ToList();
+            return requests .ToListDetails();
         }
 
         public Task<RequestDetails> CreateRequest(NewRequestDetails requestDetails)
