@@ -24,6 +24,7 @@ namespace Ellipse.Core.Extensions
                 Branch = contractor.Branch
             };
         }
+
         public static Contractor ToEntity(this ContractorDetails contractorDetails)
         {
             return new Contractor
@@ -53,5 +54,6 @@ namespace Ellipse.Core.Extensions
                 EmailAddress = contractor.EmailAddress,
             };
         }
+
     }
 }
