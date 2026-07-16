@@ -27,12 +27,7 @@ namespace Ellipse.Core
         public async Task<DocumentAccessDetails> CreateDocumentAccessAsync(DocumentAccessDetails documentAccessDetails)
         {
             var documentAccess = documentAccessDetails.ToEntity();
-            documentAccess.Id = 0; // let SQL Server generate the identity
-
-            if (documentAccess.DateAccessed == default)
-            {
-                documentAccess.DateAccessed = DateTime.UtcNow;
-            }
+            documentAccess.DateAccessed = DateTime.Now;
 
             _context.DocumentAccesses.Add(documentAccess);
             await _context.SaveChangesAsync();
