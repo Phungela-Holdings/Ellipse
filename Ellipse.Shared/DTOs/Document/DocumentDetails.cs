@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ellipse.Shared.DTOs.Document
 {
-    public class Document
+    public class DocumentDetails
     {
         public int Id { get; set; }
         public byte[] Data { get; set; } = Array.Empty<byte>();

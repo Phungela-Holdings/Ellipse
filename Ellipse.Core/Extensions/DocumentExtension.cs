@@ -1,5 +1,6 @@
 ﻿using Ellipse.Data.Entities;
-using DocumentDetails = Ellipse.Shared.DTOs.Document.Document;
+using Ellipse.Shared.DTOs.Document;
+
 
 namespace Ellipse.Core.Extensions
 {
@@ -11,7 +12,7 @@ namespace Ellipse.Core.Extensions
             {
                 Id = document.Id,
                 Data = document.Data,
-                DateUploaded = document.DateUplouded,
+                DateUploaded = document.DateUploaded,
                 DateModified = document.DateModified,
                 DocumentType = document.DocumentType,
                 RequestId = document.RequestId,
@@ -27,7 +28,7 @@ namespace Ellipse.Core.Extensions
             {
                 Id = documentDetails.Id,
                 Data = documentDetails.Data,
-                DateUplouded = documentDetails.DateUploaded,
+                DateUploaded = DateTime.Now,
                 DateModified = documentDetails.DateModified,
                 DocumentType = documentDetails.DocumentType,
                 RequestId = documentDetails.RequestId,
