@@ -6,6 +6,11 @@ namespace Ellipse.Core.Extensions
 {
     public static class RequestExtensions
     {
+        public static void UpdateStatus(this Request request)
+        {
+            //ToDo: Implement logic to update the status of the request based on certain conditions
+        }
+
         public static RequestDetails ToDetails(this Request request)
         {
             return new RequestDetails
@@ -32,10 +37,10 @@ namespace Ellipse.Core.Extensions
                 TemporaryPosition = request.TemporaryPosition,
                 TemporaryPostId = request.TemporaryPostId,
                 MissingDocuments = request.MissingDocuments,
-                LineManagerApproved = request.LineManagerApproved,
-                TrainingVerified = request.TrainingVerified,
-                ICTManagerApproved = request.ICTManagerApproved,
-                HCSystemsAdminApproved = request.HCSystemsAdminApproved,
+                LineManagerApproved = request.LineManagerApproval != null,
+                TrainingVerified = request.TrainingApproval != null,
+                ICTManagerApproved = request.ICTManagerApproval != null,
+                HCSystemsAdminApproved = request.HcAdminApproval != null,
                 TrainingCompletionDate = request.TrainingCompletionDate,
                 RequestClosed = request.RequestClosed,
                 HcAdminApprovalId = request.HcAdminApprovalId,

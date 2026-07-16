@@ -1,4 +1,5 @@
-﻿using Ellipse.Shared.DTOs.Request;
+﻿using Ellipse.Shared.DTOs;
+using Ellipse.Shared.DTOs.Request;
 
 namespace Ellipse.Shared.Interfaces
 {
@@ -14,22 +15,20 @@ namespace Ellipse.Shared.Interfaces
 
         Task<RequestDetails> UpdateRequest(RequestDetails requestDetails);
 
-        Task<bool> LineManagerRequestApproval(int requestId);
+        Task<bool> LineManagerRequestApproval(int requestId, RequestApprovalDetails requestApproval);
 
-        Task<bool> LineManagerRequestRejection(int requestId, string rejectionReason = null);
+        Task<bool> LineManagerRequestRejection(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null);
 
-        Task<bool> ICTManagerRequestApproval(int requestId);
+        Task<bool> ICTManagerRequestApproval(int requestId, RequestApprovalDetails requestApproval);
 
-        Task<bool> ICTManagerRequestRejection(int requestId, string rejectionReason = null);
+        Task<bool> ICTManagerRequestRejection(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null);
 
-        Task<bool> TrainingCenterRequestVerification(int requestId, DateTime trainingDate, string verifiedBy);
+        Task<bool> TrainingCenterRequestVerification(int requestId, RequestApprovalDetails requestApproval, DateTime trainingDate, string verifiedBy);
 
-        Task<bool> TrainingCenterRequestUnverified(int requestId, string rejectionReason = null);
+        Task<bool> TrainingCenterRequestUnverified(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null);
 
-        Task<bool> HcSystemsAdminRequestImplementation(int requestId, DateTime accessImplementationDate, string ellipseUserId);
+        Task<bool> HcSystemsAdminRequestImplementation(int requestId, RequestApprovalDetails requestApproval, DateTime accessImplementationDate, string ellipseUserId);
 
-        Task<bool> HcSystemsAdminRequestRejections(int requestId, string rejectionReason = null);
-
-        Task UpdateRequestStatus();
+        Task<bool> HcSystemsAdminRequestRejections(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null);
     }
 }
