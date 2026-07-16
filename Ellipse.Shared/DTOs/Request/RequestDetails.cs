@@ -1,4 +1,6 @@
-﻿using Ellipse.Shared.DTOs.Document;
+﻿using Ellipse.Shared.DTOs.Contract;
+using Ellipse.Shared.DTOs.Document;
+using Ellipse.Shared.DTOs.Employee;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -51,15 +53,8 @@ namespace Ellipse.Shared.DTOs.Request
         public string UserType { get; set; }
 
         public List<DocumentDetails> Documents { get; set; }
-
-        public int? ContractId { get; set; }
-
         public ContractorSummary? Contractor { get; set; }
-
-        public string? EmployeeEmail { get; set; }
-
-        [ForeignKey(nameof(EmployeeEmail))]
-        public Employee? E { get; set; }
+        public EmployeeSummary? E { get; set; }
 
         public string? TemporaryPosition { get; set; }
 
