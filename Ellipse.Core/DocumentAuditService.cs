@@ -1,33 +1,60 @@
-﻿using Ellipse.Shared.DTOs.DocumentAudit;
+﻿using Ellipse.Core.Extensions;
+using Ellipse.Data;
+using Ellipse.Shared.DTOs.DocumentAudit;
 using Ellipse.Shared.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ellipse.Core
 {
     public class DocumentAuditService : IDocumentAuditService
     {
-        public bool CreateDocumentAudit(DocumentAuditDetails documentAuditDetails)
+        private readonly EllipseDbContext _context;
+
+        public DocumentAuditService(EllipseDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public DocumentAuditDetails GetDocumentAuditById(int id)
+        public async Task<bool> CreateDocumentAudit(DocumentAuditDetails documentAuditDetails)
         {
-            throw new NotImplementedException();
+            await _context.DocumentAudits.AddAsync(documentAuditDetails.ToEntity());
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public List<DocumentAuditDetails> GetDocumentAuditsByDocument(int documentId)
+        public async Task<DocumentAuditDetails?> GetDocumentAuditById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.DocumentAudits
+                .Where(x => x.Id == id)
+                .Select(x => x.ToDetails())
+                .FirstOrDefaultAsync();
         }
 
-        public List<DocumentAuditDetails> GetAllDocumentAudits()
+        public async Task<List<DocumentAuditDetails>> GetDocumentAuditsByDocument(int documentId)
         {
-            throw new NotImplementedException();
+            return await _context.DocumentAudits
+                .Where(x => x.DocumentId == documentId)
+                .Select(x => x.ToDetails())
+                .ToListAsync();
         }
 
-        public bool DeleteDocumentAudit(int id)
+        public async Task<List<DocumentAuditDetails>> GetAllDocumentAudits()
         {
-            throw new NotImplementedException();
+            return await _context.DocumentAudits
+                .Select(x => x.ToDetails())
+                .ToListAsync();
+        }
+
+        public async Task<bool> DeleteDocumentAudit(int id)
+        {
+            var documentAudit = await _context.DocumentAudits.FindAsync(id);
+
+            _context.DocumentAudits.Remove(documentAudit);
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
