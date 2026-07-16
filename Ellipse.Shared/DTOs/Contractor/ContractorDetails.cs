@@ -37,7 +37,7 @@ namespace Ellipse.Shared.DTOs.Contract
         public string Department { get; set; }
 
 
-        public int BranchId { get; set; }
+        public string Branch { get; set; }
 
         // ToDo: Add Request Summaries
     }

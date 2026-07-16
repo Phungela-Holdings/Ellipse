@@ -40,3 +40,6 @@ namespace Ellipse.Data.Entities
        public List<Request> Requests { get; set; } = new();
     }
 }
+
+
+

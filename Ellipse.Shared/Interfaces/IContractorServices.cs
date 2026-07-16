@@ -18,4 +18,4 @@ namespace Ellipse.Shared.Interfaces
 
 
     }
-}
+}   //   dotnet ef migrations add AddTablesAndChangeBranchType --project ..\Ellipse.Data\ --startup-project  ..\Ellipse.API\
