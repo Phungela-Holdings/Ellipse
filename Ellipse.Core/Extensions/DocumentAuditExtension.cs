@@ -1,15 +1,34 @@
-﻿using Ellipse.Shared.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Ellipse.Data.Entities;
+using Ellipse.Shared.DTOs.DocumentAudit;
 
 namespace Ellipse.Core.Extensions
 {
     public static class DocumentAuditExtensions
     {
-        public static IServiceCollection AddDocumentAuditService(this IServiceCollection services)
+        public static DocumentAuditDetails ToDetails(this DocumentAudit documentAudit)
         {
-            services.AddScoped<IDocumentAuditService, DocumentAuditService>();
+            return new DocumentAuditDetails
+            {
+                Id = documentAudit.Id,
+                DocumentId = documentAudit.DocumentId,
+                DateCreated = documentAudit.DateCreated,
+                AuditType = documentAudit.AuditType,
+                DocumentData = documentAudit.DocumentData,
+                OldDocumentData = documentAudit.OldDocumentData
+            };
+        }
 
-            return services;
+        public static DocumentAudit ToEntity(this DocumentAuditDetails documentAuditDetails)
+        {
+            return new DocumentAudit
+            {
+                Id = documentAuditDetails.Id,
+                DocumentId = documentAuditDetails.DocumentId,
+                DateCreated = documentAuditDetails.DateCreated,
+                AuditType = documentAuditDetails.AuditType,
+                DocumentData = documentAuditDetails.DocumentData,
+                OldDocumentData = documentAuditDetails.OldDocumentData
+            };
         }
     }
 }
