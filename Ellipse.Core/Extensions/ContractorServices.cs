@@ -60,13 +60,12 @@ namespace Ellipse.Core
 
         public async Task<bool> DeleteContractorAsync(int contractorId)
         {
-            var contractor = await _context.Contractors
-                .FirstOrDefaultAsync(c => c.Id == contractorId);
+            var contractor = await _context.Contractors.FindAsync(contractorId);
 
             if (contractor == null)
+            {
                 return false;
-
-            _context.Contractors.Remove(contractor);
+            }
             await _context.SaveChangesAsync();
 
             return true;
