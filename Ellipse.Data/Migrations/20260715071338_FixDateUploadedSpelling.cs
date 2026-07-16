@@ -10,26 +10,7 @@ namespace Ellipse.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "DateUplouded",
-                table: "Documents",
-                newName: "DateUploaded");
-
-            migrationBuilder.AlterColumn<byte[]>(
-                name: "OldDocumentData",
-                table: "DocumentAudits",
-                type: "varbinary(max)",
-                nullable: false,
-                oldClrType: typeof(byte),
-                oldType: "tinyint");
-
-            migrationBuilder.AlterColumn<byte[]>(
-                name: "DocumentData",
-                table: "DocumentAudits",
-                type: "varbinary(max)",
-                nullable: false,
-                oldClrType: typeof(byte),
-                oldType: "tinyint");
+            
         }
 
         /// <inheritdoc />
