@@ -28,7 +28,7 @@ namespace Ellipse.Core.Extensions
         {
 
             services.AddScoped<IRequestServices, RequestServices>();
-
+            services.AddScoped<IDocumentAccessService, DocumentAccessService>();
         }
 
     }
