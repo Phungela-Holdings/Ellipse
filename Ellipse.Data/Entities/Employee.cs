@@ -26,7 +26,7 @@ namespace Ellipse.Data.Entities
 
         public string Designation { get; set; }
 
-        public string ActiveDirectortyUsername { get; set; }
+        public string ActiveDirectoryUsername { get; set; }
 
         public bool IsActive { get; set; }
 

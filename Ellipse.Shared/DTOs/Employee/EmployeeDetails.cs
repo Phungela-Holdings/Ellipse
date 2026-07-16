@@ -24,7 +24,7 @@ namespace Ellipse.Shared.DTOs.Employee
 
         public string Designation { get; set; }
 
-        public string ActiveDirectortyUsername { get; set; }
+        public string ActiveDirectoryUsername { get; set; }
         //ToDo:Add request sumarries
     }
 }

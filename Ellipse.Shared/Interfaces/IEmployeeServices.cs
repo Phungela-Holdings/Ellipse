@@ -10,7 +10,7 @@ namespace Ellipse.Shared.Interfaces
     {
         Task<EmployeeDetails> CreateEmployeeAsync(EmployeeDetails employeeDetails);
 
-        Task<EmployeeDetails> GetEmployeeByIdAsync(string email);
+        Task<EmployeeDetails? > GetEmployeeByIdAsync(string email);
 
         Task<EmployeeDetails> UpdateEmployeeAsync(EmployeeDetails employeeDetails);
 
