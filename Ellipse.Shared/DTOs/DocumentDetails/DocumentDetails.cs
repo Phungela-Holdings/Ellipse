@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Ellipse.Shared.DTOs.Document
+namespace Ellipse.Shared.DTOs.DocumentDetails
 {
     public class DocumentDetails
     {
@@ -15,7 +13,5 @@ namespace Ellipse.Shared.DTOs.Document
         public bool Active { get; set; }
         public bool Archived { get; set; }
         public DateTime? ArchivedDate { get; set; }
-
-
     }
 }

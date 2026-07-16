@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Ellipse.Shared.DTOs.DocumentDetails;
 
 namespace Ellipse.Shared.Interfaces
 {
-        namespace Ellipse.Shared.Interfaces
-        {
-        public interface IDocumentService
-        {
-            Document CreateDocument(Document documemt);
-            Document GetDocumentById(Document document);
-            List<Document> GetRequestDocument(int requestId);
-            Document UpdateDocument(Document document);
-            bool DeleteDocument(int documentId);
-            bool ArchiveDocument(int documentId);
-            byte[] DownloadDocument(int documentId);
-        }
-
-
-        }
-           
+    public interface IDocumentService
+    {
+        Task<DocumentDetails> CreateDocument(DocumentDetails documentDetails);
+        Task<DocumentDetails> GetDocumentById(int documentId);
+        Task<List<DocumentDetails>> GetRequestDocuments(int requestId);
+        Task<DocumentDetails> UpdateDocument(DocumentDetails documentDetails);
+        Task<bool> DeleteDocument(int documentId);
+        Task<bool> ArchiveDocument(int documentId);
+        Task<byte[]> DownloadDocument(int documentId);
+    }
 }

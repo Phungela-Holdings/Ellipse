@@ -1,6 +1,6 @@
 using Ellipse.Core.Extensions;
 using Ellipse.Data;
-using Ellipse.Shared.DTOs.Document;
+using Ellipse.Shared.DTOs.DocumentDetails;
 using Ellipse.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
