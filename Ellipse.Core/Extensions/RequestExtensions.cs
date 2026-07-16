@@ -1,5 +1,4 @@
-﻿
-using Ellipse.Data.Entities;
+﻿using Ellipse.Data.Entities;
 using Ellipse.Shared.DTOs.Request;
 
 namespace Ellipse.Core.Extensions
@@ -30,10 +29,8 @@ namespace Ellipse.Core.Extensions
                 AdditionalUserAccess = request.AdditionalUserAccess,
                 userId = request.userId,
                 UserType = request.UserType,
-                //Documents = request.Documents,
-                ContractId = request.ContractId,
-                //Contractor = request.Contractor,
-                EmployeeEmail = request.EmployeeEmail,
+                //Documents = request.Document  To do
+                //Contractor = request.Contractor  To do
                 TemporaryPosition = request.TemporaryPosition,
                 TemporaryPostId = request.TemporaryPostId,
                 MissingDocuments = request.MissingDocuments,
@@ -58,7 +55,32 @@ namespace Ellipse.Core.Extensions
                 Id = requestDetails.Id,
                 RequestedDate = requestDetails.RequestedDate,
                 StartDate = requestDetails.StartDate,
-                Status = requestDetails.Status
+                Status = requestDetails.Status,
+                EllipseUserId = requestDetails.EllipseUserId,
+                EllipsePosition = requestDetails.EllipsePosition,
+                MenuAccess = requestDetails.MenuAccess,
+                BusinessJustification = requestDetails.BusinessJustification,
+                RequestType = requestDetails.RequestType,
+                Environment = requestDetails.Environment,
+                UserAccessType = requestDetails.UserAccessType,
+                AdditionalUserAccess = requestDetails.AdditionalUserAccess,
+                userId = requestDetails.userId,
+                UserType = requestDetails.UserType,
+                //Documents = requestDetails.Document  To do
+                //Contractor = requestDetails.Contractor  To do
+                TemporaryPosition = requestDetails.TemporaryPosition,
+                TemporaryPostId = requestDetails.TemporaryPostId,
+                MissingDocuments = requestDetails.MissingDocuments,
+                LineManagerApproved = requestDetails.LineManagerApproved,
+                TrainingVerified = requestDetails.TrainingVerified,
+                ICTManagerApproved = requestDetails.ICTManagerApproved,
+                HCSystemsAdminApproved = requestDetails.HCSystemsAdminApproved,
+                TrainingCompletionDate = requestDetails.TrainingCompletionDate,
+                RequestClosed = requestDetails.RequestClosed,
+                HcAdminApprovalId = requestDetails.HcAdminApprovalId,
+                LineManagerApprovalId = requestDetails.LineManagerApprovalId,
+                TrainingApprovalId = requestDetails.TrainingApprovalId,
+                ICTManagerApprovalId = requestDetails.ICTManagerApprovalId,
             };
         }
 
