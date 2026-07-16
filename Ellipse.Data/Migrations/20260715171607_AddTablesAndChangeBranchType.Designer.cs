@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ellipse.Data.Migrations
 {
     [DbContext(typeof(EllipseDbContext))]
-    [Migration("20260714122002_RequestTableUpdated")]
-    partial class RequestTableUpdated
+    [Migration("20260715171607_AddTablesAndChangeBranchType")]
+    partial class AddTablesAndChangeBranchType
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,8 +36,9 @@ namespace Ellipse.Data.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<int>("BranchId")
-                        .HasColumnType("int");
+                    b.Property<string>("Branch")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BusinessJustification")
                         .IsRequired()
@@ -47,8 +48,13 @@ namespace Ellipse.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -98,7 +104,7 @@ namespace Ellipse.Data.Migrations
                     b.Property<DateTime?>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateUplouded")
+                    b.Property<DateTime>("DateUploaded")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DocumentType")
@@ -158,14 +164,16 @@ namespace Ellipse.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("DocumentData")
-                        .HasColumnType("tinyint");
+                    b.Property<byte[]>("DocumentData")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("DocumentId")
                         .HasColumnType("int");
 
-                    b.Property<byte>("OldDocumentData")
-                        .HasColumnType("tinyint");
+                    b.Property<byte[]>("OldDocumentData")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 

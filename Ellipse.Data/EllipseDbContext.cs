@@ -1,6 +1,5 @@
 ﻿using Ellipse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Ellipse.Data
 {

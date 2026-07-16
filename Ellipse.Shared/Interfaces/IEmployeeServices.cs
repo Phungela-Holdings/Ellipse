@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ellipse.Shared.DTOs.Employee;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Ellipse.Shared.DTOs.Employee;
