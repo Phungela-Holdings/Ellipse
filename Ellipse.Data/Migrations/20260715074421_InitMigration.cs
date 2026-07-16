@@ -20,13 +20,14 @@ namespace Ellipse.Data.Migrations
                     IdentificationNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ResponsibleManager = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BusinessJustification = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    BranchId = table.Column<int>(type: "int", nullable: false),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Branch = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -63,7 +64,7 @@ namespace Ellipse.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RequestedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EllipseUserId = table.Column<long>(type: "bigint", nullable: false),
                     EllipsePosition = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -76,7 +77,20 @@ namespace Ellipse.Data.Migrations
                     userId = table.Column<long>(type: "bigint", nullable: false),
                     UserType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ContractId = table.Column<int>(type: "int", nullable: true),
-                    EmployeeEmail = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    EmployeeEmail = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TemporaryPosition = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TemporaryPostId = table.Column<int>(type: "int", nullable: true),
+                    MissingDocuments = table.Column<bool>(type: "bit", nullable: true),
+                    LineManagerApproved = table.Column<bool>(type: "bit", nullable: true),
+                    TrainingVerified = table.Column<bool>(type: "bit", nullable: true),
+                    ICTManagerApproved = table.Column<bool>(type: "bit", nullable: true),
+                    HCSystemsAdminApproved = table.Column<bool>(type: "bit", nullable: true),
+                    TrainingCompletionDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RequestClosed = table.Column<bool>(type: "bit", nullable: true),
+                    HcAdminApprovalId = table.Column<int>(type: "int", nullable: true),
+                    LineManagerApprovalId = table.Column<int>(type: "int", nullable: true),
+                    TrainingApprovalId = table.Column<int>(type: "int", nullable: true),
+                    ICTManagerApprovalId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

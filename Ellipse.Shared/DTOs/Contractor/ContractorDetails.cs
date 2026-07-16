@@ -1,24 +1,28 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace Ellipse.Data.Entities
+namespace Ellipse.Shared.DTOs.Contract
 {
-    public class Contractor
+    public class ContractorDetails
     {
-        [Key]
         public int Id { get; set; }
 
 
         public string IdentificationNumber { get; set; }
 
+
         public string Surname { get; set; }
+
 
         public string FirstName { get; set; }
 
+
         public string EmailAddress { get; set; }
 
+
         public string CompanyName { get; set; }
+
 
         public string ResponsibleManager { get; set; }
 
@@ -29,17 +33,13 @@ namespace Ellipse.Data.Entities
 
         public DateTime EndDate { get; set; }
 
-   
+
         public string Department { get; set; }
 
 
         public string Branch { get; set; }
 
-        public bool Active { get; set; }
-
-       public List<Request> Requests { get; set; } = new();
+        // ToDo: Add Request Summaries
     }
+
 }
-
-
-
