@@ -10,7 +10,7 @@ namespace Ellipse.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        public string Status { get; set; } // nvarchar(MAX)
+        public string Status { get; set; } 
 
         public DateTime StartDate { get; set; }
 
@@ -22,16 +22,16 @@ namespace Ellipse.Data.Entities
         public long EllipseUserId { get; set; }
 
         [Required]
-        public string EllipsePosition { get; set; } // nvarchar(MAX)
+        public string EllipsePosition { get; set; } 
 
         [Required]
-        public string MenuAccess { get; set; } // nvarchar(MAX)
+        public string MenuAccess { get; set; } 
 
         [Required]
-        public string BusinessJustification { get; set; } // nvarchar(MAX)
+        public string BusinessJustification { get; set; } 
 
         [Required]
-        public string RequestType { get; set; } // nvarchar(MAX)
+        public string RequestType { get; set; } 
 
         [Required]
         [StringLength(50)]
@@ -62,7 +62,7 @@ namespace Ellipse.Data.Entities
         public string? EmployeeEmail { get; set; }
 
         [ForeignKey(nameof(EmployeeEmail))]
-        public Employee? E { get; set; }
+        public Employee? Employee { get; set; }
 
         public string? TemporaryPosition { get; set; }
 
@@ -70,25 +70,29 @@ namespace Ellipse.Data.Entities
 
         public bool? MissingDocuments { get; set; }
 
-        public bool? LineManagerApproved { get; set; }
-
-        public bool? TrainingVerified { get; set; }
-
-        public bool? ICTManagerApproved { get; set; }
-
-        public bool? HCSystemsAdminApproved { get; set; }
-
-        public DateTime? TrainingCompletionDate { get; set; }
-
         public bool? RequestClosed { get; set; }
 
-        // Foreign keys will be added after Approval table is created
         public int? HcAdminApprovalId { get; set; }
+
+        [ForeignKey(nameof(HcAdminApprovalId))]
+        public RequestApproval? HcAdminApproval { get; set; }
 
         public int? LineManagerApprovalId { get; set; }
 
+        public DateTime? TrainingCompletionDate { get; set; }
+        public RequestApproval? LineManagerApproval { get; set; }
+
         public int? TrainingApprovalId { get; set; }
 
+        [ForeignKey(nameof(TrainingApprovalId))]
+        public RequestApproval? TrainingApproval { get; set; }
+
         public int? ICTManagerApprovalId { get; set; }
+
+        [ForeignKey(nameof(ICTManagerApprovalId))]
+
+        public RequestApproval? ICTManagerApproval { get; set; }
+
+        public string? Rejection { get; set; }
     }
 }
