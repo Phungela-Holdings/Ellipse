@@ -55,7 +55,7 @@ namespace Ellipse.API.Controllers
         {
             try
             {
-                var result = await _documentService.GetRequestDocument(requestId);
+                var result = await _documentService.GetRequestDocuments(requestId);
                 return Ok(result);
             }
             catch (Exception ex)

@@ -1,4 +1,4 @@
-﻿using Ellipse.Shared.DTOs.Document;
+using Ellipse.Shared.DTOs.Document;
 
 namespace Ellipse.Shared.Interfaces
 {
@@ -6,16 +6,16 @@ namespace Ellipse.Shared.Interfaces
     {
         Task<DocumentDetails> CreateDocument(DocumentDetails documentDetails);
 
-        Task<DocumentDetails> GetDocumentById(int id);
+        Task<DocumentDetails> GetDocumentById(int documentId);
 
-        Task<List<DocumentDetails>> GetRequestDocument(int requestId);
+        Task<List<DocumentDetails>> GetRequestDocuments(int requestId);
 
         Task<DocumentDetails> UpdateDocument(DocumentDetails documentDetails);
 
-        Task<bool> DeleteDocument(int id);
+        Task<bool> DeleteDocument(int documentId);
 
-        Task<bool> ArchiveDocument(int id);
+        Task<bool> ArchiveDocument(int documentId);
 
-        Task<byte[]> DownloadDocument(int id);
+        Task<byte[]> DownloadDocument(int documentId);
     }
 }
