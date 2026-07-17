@@ -9,8 +9,6 @@ namespace Ellipse.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        public byte[] Data { get; set; } = Array.Empty<byte>();
-
         public DateTime DateUploaded { get; set; }
 
         public DateTime? DateModified { get; set; }

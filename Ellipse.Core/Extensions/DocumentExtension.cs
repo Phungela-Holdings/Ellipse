@@ -29,7 +29,7 @@ namespace Ellipse.Core.Extensions
             {
                 Id = documentDetails.Id,
                 Data = documentDetails.Data,
-                DateUploaded = documentDetails.DateUploaded,
+                DateUploaded = DateTime.Now, 
                 DateModified = documentDetails.DateModified,
                 DocumentType = documentDetails.DocumentType,
                 RequestId = documentDetails.RequestId,

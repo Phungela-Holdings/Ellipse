@@ -17,26 +17,23 @@ namespace Ellipse.Core
 
         public async Task<DocumentDetails> CreateDocument(DocumentDetails documentDetails)
         {
-            var entity = documentDetails.ToEntity();
+            var document = documentDetails.ToEntity();
 
-            entity.DateUploaded = documentDetails.DateUploaded == default
-                ? DateTime.UtcNow
-                : documentDetails.DateUploaded;
 
-            _context.Documents.Add(entity);
+            _context.Documents.Add(document);
 
             await _context.SaveChangesAsync();
 
-            return entity.ToDetails();
+            return document.ToDetails();
         }
 
         public async Task<DocumentDetails> GetDocumentById(int documentId)
         {
-            var entity = await _context.Documents.FindAsync(documentId)
+            var document = await _context.Documents.FindAsync(documentId)
                 ?? throw new KeyNotFoundException(
                     $"Document with ID {documentId} not found");
 
-            return entity.ToDetails();
+            return document.ToDetails();
         }
 
         public async Task<List<DocumentDetails>> GetRequestDocuments(int requestId)
@@ -51,32 +48,32 @@ namespace Ellipse.Core
         public async Task<DocumentDetails> UpdateDocument(
             DocumentDetails documentDetails)
         {
-            var existing = await _context.Documents.FindAsync(documentDetails.Id)
+            var document = await _context.Documents.FindAsync(documentDetails.Id)
                 ?? throw new KeyNotFoundException(
                     $"Document with ID {documentDetails.Id} not found");
 
-            existing.Data = documentDetails.Data;
-            existing.DateModified = DateTime.UtcNow;
-            existing.DocumentType = documentDetails.DocumentType;
-            existing.Active = documentDetails.Active;
-            existing.Archived = documentDetails.Archived;
-            existing.ArchivedDate = documentDetails.ArchivedDate;
+            document.Data = documentDetails.Data;
+            document.DateModified = DateTime.UtcNow;
+            document.DocumentType = documentDetails.DocumentType;
+            document.Active = documentDetails.Active;
+            document.Archived = documentDetails.Archived;
+            document.ArchivedDate = documentDetails.ArchivedDate;
 
             await _context.SaveChangesAsync();
 
-            return existing.ToDetails();
+            return document.ToDetails();
         }
 
         public async Task<bool> DeleteDocument(int documentId)
         {
-            var entity = await _context.Documents.FindAsync(documentId);
+            var document = await _context.Documents.FindAsync(documentId);
 
-            if (entity == null)
+            if (document == null)
             {
                 return false;
             }
 
-            _context.Documents.Remove(entity);
+            document.Active = false;
 
             await _context.SaveChangesAsync();
 

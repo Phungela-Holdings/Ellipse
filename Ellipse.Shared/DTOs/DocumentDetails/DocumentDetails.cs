@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace Ellipse.Shared.DTOs.DocumentDetails
+namespace Ellipse.Shared.DTOs.DocumentDetails;
+
+public class DocumentDetails
 {
-    public class DocumentDetails
-    {
-        public int Id { get; set; }
-        public byte[] Data { get; set; } = Array.Empty<byte>();
-        public DateTime DateUploaded { get; set; }
-        public DateTime? DateModified { get; set; }
-        public string DocumentType { get; set; } = string.Empty;
-        public int RequestId { get; set; }
-        public bool Active { get; set; }
-        public bool Archived { get; set; }
-        public DateTime? ArchivedDate { get; set; }
-    }
+    public int Id { get; set; }
+    public byte[] Data { get; set; } = Array.Empty<byte>();
+    public DateTime DateUploaded { get; set; }
+    public DateTime? DateModified { get; set; }
+    public string DocumentType { get; set; } = string.Empty;
+    public int RequestId { get; set; }
+    public bool Active { get; set; }
+    public bool Archived { get; set; }
+    public DateTime? ArchivedDate { get; set; }
+
 }
