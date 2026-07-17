@@ -16,6 +16,5 @@ namespace Ellipse.Shared.Interfaces
 
         Task<bool> DeleteContractorAsync(int contractorId);
 
-
     }
-}   //   dotnet ef migrations add AddTablesAndChangeBranchType --project ..\Ellipse.Data\ --startup-project  ..\Ellipse.API\
+}   

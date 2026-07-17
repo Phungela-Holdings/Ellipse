@@ -2,18 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Ellipse.Shared.DTOs.Employee;
 
 namespace Ellipse.Shared.Interfaces
 {
     public interface IEmployeeServices
     {
         Task<EmployeeDetails> CreateEmployeeAsync(EmployeeDetails employeeDetails);
-
-        Task<EmployeeDetails> GetEmployeeByIdAsync(string email);
-
+        Task<EmployeeDetails? > GetEmployeeByIdAsync(string email);
         Task<EmployeeDetails> UpdateEmployeeAsync(EmployeeDetails employeeDetails);
-
         Task<bool> DeleteEmployeeAsync(string email);
     }
 }

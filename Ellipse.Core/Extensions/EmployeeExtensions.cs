@@ -27,12 +27,12 @@ namespace Ellipse.Core.Extensions
 
                 Designation=employee.Designation,
 
-                ActiveDirectortyUsername=employee.ActiveDirectortyUsername,
+                ActiveDirectoryUsername=employee.ActiveDirectoryUsername,
             };
         }
-        public static EmployeeDetails ToEntity(this Employee employee)
+        public static Employee ToEntity(this EmployeeDetails employee)
         {
-            return new EmployeeDetails
+            return new Employee
             {
                 EmailAddress = employee.EmailAddress,
 
@@ -52,7 +52,7 @@ namespace Ellipse.Core.Extensions
 
                 Designation = employee.Designation,
 
-                ActiveDirectortyUsername = employee.ActiveDirectortyUsername,
+                ActiveDirectoryUsername = employee.ActiveDirectoryUsername,
             };
         }
         public static EmployeeSummary ToSummary(this Employee employee)
@@ -69,6 +69,11 @@ namespace Ellipse.Core.Extensions
 
                 Department = employee.Department,
             };
+        }
+
+        public static List<EmployeeDetails> ToListDetails(this List<Employee> employees)
+        {
+            return employees.Select(employee => employee.ToDetails()).ToList();
         }
     }
 }
