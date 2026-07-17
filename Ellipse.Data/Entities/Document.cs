@@ -25,5 +25,6 @@ namespace Ellipse.Data.Entities
         public bool Archived { get; set; }
 
         public DateTime? ArchivedDate { get; set; }
+        public byte[] Data { get; set; }
     }
 }

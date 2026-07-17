@@ -14,4 +14,5 @@ public class DocumentDetails
     public bool Archived { get; set; }
     public DateTime? ArchivedDate { get; set; }
 
+
 }

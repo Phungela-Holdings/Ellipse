@@ -55,9 +55,7 @@ namespace Ellipse.Core
             document.Data = documentDetails.Data;
             document.DateModified = DateTime.UtcNow;
             document.DocumentType = documentDetails.DocumentType;
-            document.Active = documentDetails.Active;
-            document.Archived = documentDetails.Archived;
-            document.ArchivedDate = documentDetails.ArchivedDate;
+
 
             await _context.SaveChangesAsync();
 
