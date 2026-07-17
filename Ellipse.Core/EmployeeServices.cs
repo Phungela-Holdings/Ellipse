@@ -3,15 +3,11 @@ using Ellipse.Data;
 using Ellipse.Shared.DTOs.Employee;
 using Ellipse.Shared.Interfaces;
 
-
 namespace Ellipse.Core
 {
     public class EmployeeServices : IEmployeeServices
-
-
     {
         private readonly EllipseDbContext _context;
-
         public EmployeeServices(EllipseDbContext context)
         {
             _context = context;
@@ -25,17 +21,12 @@ namespace Ellipse.Core
 
             return employee.ToDetails();
         }
-
-
         public async Task<EmployeeDetails?> GetEmployeeByIdAsync(string email)
         {
             var employee = await _context.Employees.FindAsync(email);
-
           
             return employee?.ToDetails();
         }
-
-
         public async Task<EmployeeDetails> UpdateEmployeeAsync(EmployeeDetails employeeDetails)
         {
             var employee = await _context.Employees.FindAsync(employeeDetails.EmailAddress);
@@ -43,7 +34,6 @@ namespace Ellipse.Core
             {
                 return null;
             }
-            
             employee.FirstName=employeeDetails.FirstName;
             employee.Surname=employeeDetails.Surname;
             employee.ContactNumber=employeeDetails.ContactNumber;
@@ -55,12 +45,7 @@ namespace Ellipse.Core
 
             await _context.SaveChangesAsync();
             return employee.ToDetails();
-
-           
-
         }
-
-
         public async Task<bool> DeleteEmployeeAsync(string email)
         {
             var employee = await _context.Employees.FindAsync(email);
@@ -68,13 +53,9 @@ namespace Ellipse.Core
             {
                 return false;
             }
-
             employee.IsActive = false;
             await _context.SaveChangesAsync();
-            return true;
-
-           
+            return true;   
         }
-
     }
 }
