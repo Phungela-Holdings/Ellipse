@@ -1,5 +1,6 @@
 ﻿using Ellipse.Core.Extensions;
 using Ellipse.Data;
+using Ellipse.Data.Entities;
 using Ellipse.Shared.DTOs;
 using Ellipse.Shared.DTOs.Request;
 using Ellipse.Shared.Interfaces;
@@ -25,6 +26,43 @@ namespace Ellipse.Core
 
         public async Task<RequestDetails> CreateRequest(NewRequestDetails requestDetails)
         {
+            if (requestDetails?.RequestDetails == null)
+                throw new ArgumentException("RequestDetails cannot be null.",
+            if (requestDetails?.RequestDetails == null)
+                throw new ArgumentException("RequestDetails cannot be null.", nameof(requestDetails));
+
+            var entity = requestDetails.RequestDetails.ToEntity();
+
+            entity.RequestedDate = DateTime.UtcNow;
+            entity.Status = "Pending";
+
+            _context.Requests.Add(entity);
+            await _context.SaveChangesAsync();
+
+            return entity.ToDetails();
+        }
+
+        public async Task<RequestDetails> GetRequest(int requestId)
+        {
+            var request = await _context.Requests
+                .FirstOrDefaultAsync(r => r.Id == requestId);
+
+            if (request == null)
+                throw new KeyNotFoundException($"Request with Id {requestId} was not found.");
+
+            return request.ToDetails();
+        }
+
+        public async Task<List<RequestDetails>> SearchRequest(string searchString)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return await GetRequests();
+
+            var term = searchString.Trim().ToLower();
+
+            var requests = await _context.Requests
+                .Where(r =>
+                    r.Status.ToLower().Contains(term) ||
             var transaction = await _context.Database.BeginTransactionAsync();
             var request = requestDetails.RequestDetails.ToEntity();
 
@@ -66,70 +104,137 @@ namespace Ellipse.Core
             return request.ToDetails();
         }
 
-        public Task<RequestDetails> GetRequest(int requestId)
+        public async Task<RequestDetails> UpdateRequest(RequestDetails requestDetails)
         {
-            // TODO: implement
-            throw new NotImplementedException();
+            var existing = await _context.Requests
+                .FirstOrDefaultAsync(r => r.Id == requestDetails.Id);
+
+            if (existing == null)
+                throw new KeyNotFoundException($"Request with Id {requestDetails.Id} was not found.");
+
+            existing.Status = requestDetails.Status;
+            existing.StartDate = requestDetails.StartDate;
+            existing.EndDate = requestDetails.EndDate;
+            existing.EllipseUserId = requestDetails.EllipseUserId;
+            existing.EllipsePosition = requestDetails.EllipsePosition;
+            existing.MenuAccess = requestDetails.MenuAccess;
+            existing.BusinessJustification = requestDetails.BusinessJustification;
+            existing.RequestType = requestDetails.RequestType;
+            existing.Environment = requestDetails.Environment;
+            existing.UserAccessType = requestDetails.UserAccessType;
+            existing.AdditionalUserAccess = requestDetails.AdditionalUserAccess;
+            existing.userId = requestDetails.userId;
+            existing.UserType = requestDetails.UserType;
+            existing.TemporaryPosition = requestDetails.TemporaryPosition;
+            existing.TemporaryPostId = requestDetails.TemporaryPostId;
+
+            await _context.SaveChangesAsync();
+
+            return existing.ToDetails();
         }
 
-        public Task<List<RequestDetails>> SearchRequest(string searchString)
+        public async Task<bool> LineManagerRequestApproval(int requestId)
         {
-            // TODO: implement
-            throw new NotImplementedException();
+            return await SetApprovalFlag(requestId, r => r.LineManagerApproved = true);
+        }
+
+        public async Task<bool> LineManagerRequestRejection(int requestId, string rejectionReason = null)
+        {
+            return await SetApprovalFlag(requestId, r => r.LineManagerApproved = false);
         }
 
         public Task<RequestDetails> UpdateRequest(RequestDetails requestDetails)
+        public Task<bool> LineManagerRequestRejection(int requestId, string rejectionReason = null)
+        public Task<bool> LineManagerRequestApproval(int requestId)
         {
             // TODO: implement
-            throw new NotImplementedException();
-        }
 
         public Task<bool> LineManagerRequestApproval(int requestId, RequestApprovalDetails requestApproval)
+        public Task<bool> ICTManagerRequestApproval(int requestId)
+
+        public Task<bool> LineManagerRequestRejection(int requestId, string rejectionReason = null)
         {
-            // TODO: implement
-            throw new NotImplementedException();
+            return await SetApprovalFlag(requestId, r => r.ICTManagerApproved = false);
         }
 
+        public Task<bool> ICTManagerRequestApproval(int requestId)
+            {
         public Task<bool> LineManagerRequestRejection(int requestId, RequestApprovalDetails requestApproval, string rejectionReason)
-        {
-            // TODO: implement
-            throw new NotImplementedException();
-        }
+        public Task<bool> ICTManagerRequestRejection(int requestId, string rejectionReason = null)
+            {
+                r.TrainingVerified = true;
+                r.TrainingCompletionDate = trainingDate;
 
         public Task<bool> ICTManagerRequestApproval(int requestId, RequestApprovalDetails requestApproval)
+        public Task<bool> TrainingCenterRequestVerification(int requestId, DateTime trainingDate, string verifiedBy)
+
+        public Task<bool> ICTManagerRequestRejection(int requestId, string rejectionReason = null)
         {
-            // TODO: implement
-            throw new NotImplementedException();
-        }
 
         public Task<bool> ICTManagerRequestRejection(int requestId, RequestApprovalDetails requestApproval, string rejectionReason)
+        public Task<bool> TrainingCenterRequestUnverified(int requestId, string rejectionReason = null)
+
+        public Task<bool> TrainingCenterRequestVerification(int requestId, DateTime trainingDate, string verifiedBy)
         {
-            // TODO: implement
-            throw new NotImplementedException();
+
+        public async Task<bool> HcSystemsAdminRequestRejections(int requestId, string rejectionReason = null)
+        {
+            return await SetApprovalFlag(requestId, r => r.HCSystemsAdminApproved = false);
         }
 
+        public async Task UpdateRequestStatus()
+        {
+            var requests = await _context.Requests
+                .Where(r => r.RequestClosed != true)
         public Task<bool> TrainingCenterRequestVerification(int requestId, RequestApprovalDetails requestApproval, DateTime trainingDate, string verifiedBy)
         {
             // TODO: implement
             throw new NotImplementedException();
         }
+        }
+
+            foreach (var request in requests)
+            {
+                request.Status = DetermineStatus(request);
+            }
 
         public Task<bool> TrainingCenterRequestUnverified(int requestId, RequestApprovalDetails requestApproval, string rejectionReason)
+        public Task<bool> HcSystemsAdminRequestRejections(int requestId, string rejectionReason = null)
+        public Task<bool> HcSystemsAdminRequestImplementation(int requestId, DateTime accessImplementationDate, string ellipseUserId)
         {
             // TODO: implement
             throw new NotImplementedException();
         }
+
+        public Task<bool> HcSystemsAdminRequestRejections(int requestId, string rejectionReason = null)
+        {
+            var request = await _context.Requests
+                .FirstOrDefaultAsync(r => r.Id == requestId);
+
 
         public Task<bool> HcSystemsAdminRequestImplementation(int requestId, RequestApprovalDetails requestApproval, DateTime accessImplementationDate, string ellipseUserId)
-        {
-            // TODO: implement
-            throw new NotImplementedException();
+        public Task UpdateRequestStatus()
+
+            apply(request);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<bool> HcSystemsAdminRequestRejections(int requestId, RequestApprovalDetails requestApproval, string rejectionReason)
+        public Task UpdateRequestStatus()
         {
-            // TODO: implement
-            throw new NotImplementedException();
+            if (request.LineManagerApproved == false ||
+                request.ICTManagerApproved == false ||
+                request.TrainingVerified == false ||
+                request.HCSystemsAdminApproved == false)
+                return "Rejected";
+
+            if (request.LineManagerApproved == true &&
+                request.ICTManagerApproved == true &&
+                request.TrainingVerified == true &&
+                request.HCSystemsAdminApproved == true)
+                return "Approved";
+
+            return "Pending";
         }
     }
 }
