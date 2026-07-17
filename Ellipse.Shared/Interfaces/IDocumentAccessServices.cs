@@ -1,4 +1,4 @@
-﻿using Ellipse.Shared.DTOs.Document;
+﻿using Ellipse.Shared.DTOs.DocumentDetails;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
