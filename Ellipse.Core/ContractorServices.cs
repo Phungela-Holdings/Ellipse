@@ -66,6 +66,7 @@ namespace Ellipse.Core
             {
                 return false;
             }
+            contractor.Active = false;
             await _context.SaveChangesAsync();
 
             return true;
