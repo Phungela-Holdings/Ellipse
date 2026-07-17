@@ -80,19 +80,6 @@ namespace Ellipse.API.Controllers
             }
         }
 
-        [HttpDelete]
-        public async Task<ActionResult<bool>> DeleteDocumentAudit(int id)
-        {
-            try
-            {
-                var result = await _documentAuditService.DeleteDocumentAudit(id);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex, "An error occurred while deleting document audit.");
-                throw;
             }
         }
-    }
-}
+    

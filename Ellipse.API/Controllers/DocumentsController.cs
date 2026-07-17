@@ -1,6 +1,5 @@
 ﻿using Ellipse.Shared.DTOs.Document;
 using Ellipse.Shared.Interfaces;
-using Ellipse.Shared.Interfaces.Ellipse.Shared.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
