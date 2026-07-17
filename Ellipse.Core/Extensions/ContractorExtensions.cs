@@ -4,7 +4,7 @@ using Ellipse.Data.Entities;
 
 namespace Ellipse.Core.Extensions
 {
-    public static class ContractExtensions
+    public static class ContractorExtensions
     {
         public static ContractorDetails ToDetails(this Contractor contractor)
         {
@@ -24,6 +24,7 @@ namespace Ellipse.Core.Extensions
                 Branch = contractor.Branch
             };
         }
+
         public static Contractor ToEntity(this ContractorDetails contractorDetails)
         {
             return new Contractor
@@ -51,11 +52,8 @@ namespace Ellipse.Core.Extensions
                 Surname = contractor.Surname,
                 FirstName = contractor.FirstName,
                 EmailAddress = contractor.EmailAddress,
-
-
             };
-
-
         }
+
     }
 }
