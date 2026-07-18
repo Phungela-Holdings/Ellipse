@@ -1,5 +1,7 @@
+﻿using System.Collections.Generic;
+using System.Linq;
 using Ellipse.Data.Entities;
-using Ellipse.Shared.DTOs.Document;
+using Ellipse.Shared.DTOs;
 
 namespace Ellipse.Core.Extensions
 {
