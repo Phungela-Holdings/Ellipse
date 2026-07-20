@@ -15,6 +15,7 @@ namespace Ellipse.API
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext(builder.Configuration);
+            builder.Services.AddServices();
 
             var app = builder.Build();
 
