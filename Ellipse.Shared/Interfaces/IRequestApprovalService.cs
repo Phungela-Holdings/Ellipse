@@ -4,8 +4,8 @@ namespace Ellipse.Shared.Interfaces
 {
     public interface IRequestApprovalService
     {
-        bool CreateApprovals(RequestApprovalDetails requestApprovalDetails);
+        Task<bool> CreateApprovalsAsync(RequestApprovalDetails requestApprovalDetails);
 
-        List<RequestApprovalDetails> GetApprovalsForRequest(int requestId);
+        Task<List<RequestApprovalDetails>> GetApprovalsForRequestAsync(int requestId);
     }
 }
