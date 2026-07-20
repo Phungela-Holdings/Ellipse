@@ -3,10 +3,6 @@ using Ellipse.Data;
 using Ellipse.Shared.DTOs;
 using Ellipse.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Ellipse.Core
 {
@@ -19,23 +15,24 @@ namespace Ellipse.Core
             _context = context;
         }
 
-        public bool CreateApprovals(RequestApprovalDetails requestApprovalDetails)
+        public async Task<bool> CreateApprovalsAsync(RequestApprovalDetails requestApprovalDetails)
         {
             var requestApproval = requestApprovalDetails.ToEntity();
 
-            _context.RequestApprovals.Add(requestApproval);
+            await _context.RequestApprovals.AddAsync(requestApproval);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
         }
 
-        public List<RequestApprovalDetails> GetApprovalsForRequest(int requestId)
+        public async Task<List<RequestApprovalDetails>> GetApprovalsForRequestAsync(int requestId)
         {
-            return _context.RequestApprovals
-                           .Where(x => x.RequestId == requestId)
-                           .ToList()
-                           .ToListDetails();
+            var approvals = await _context.RequestApprovals
+                                          .Where(x => x.RequestId == requestId)
+                                          .ToListAsync();
+
+            return approvals.ToListDetails();
         }
     }
 }

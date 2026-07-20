@@ -56,7 +56,6 @@ namespace Ellipse.API.Controllers
                 throw;
             }
         }
-
         // PUT: api/contractors
         [HttpPut]
         public async Task<ActionResult> UpdateContractor([FromBody] ContractorDetails contractorDetails)
@@ -77,7 +76,6 @@ namespace Ellipse.API.Controllers
                 throw;
             }
         }
-
             // DELETE: api/contractors/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteContractor(int id)
@@ -91,7 +89,7 @@ namespace Ellipse.API.Controllers
                     return NotFound();
                 }
 
-                return NoContent();
+                return Ok("Contractor deleted successfully.");
             }
             catch (Exception ex)
             {

@@ -14,7 +14,6 @@ namespace Ellipse.Core
         {
             _context = context;
         }
-
         public async Task<ContractorDetails> CreateContractorAsync(ContractorDetails contractorDetails)
         {
             var contractor = contractorDetails.ToEntity();
@@ -40,7 +39,6 @@ namespace Ellipse.Core
             {
                 return null;
             }
-
             contractor.IdentificationNumber = contractorDetails.IdentificationNumber;
             contractor.Surname = contractorDetails.Surname;
             contractor.FirstName = contractorDetails.FirstName;
