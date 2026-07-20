@@ -69,7 +69,6 @@ namespace Ellipse.API.Controllers
                 {
                     return NotFound();
                 }
-
                 return Ok(result);
             }
             catch (Exception ex)
