@@ -4,6 +4,7 @@ using Ellipse.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ellipse.Data.Migrations
 {
     [DbContext(typeof(EllipseDbContext))]
-    partial class EllipseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260722084548_AddNotificationTable")]
+    partial class AddNotificationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,27 +230,6 @@ namespace Ellipse.Data.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Ellipse.Data.Entities.Environment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<bool>("RequiresTraining")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Environments");
-                });
-
             modelBuilder.Entity("Ellipse.Data.Entities.Notification", b =>
                 {
                     b.Property<int>("Id")
@@ -397,7 +379,7 @@ namespace Ellipse.Data.Migrations
                     b.ToTable("Requests");
                 });
 
-            modelBuilder.Entity("Ellipse.Data.Entities.RequestApproverAction", b =>
+            modelBuilder.Entity("Ellipse.Data.Entities.RequestApproval", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -405,15 +387,11 @@ namespace Ellipse.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ActionType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ApproveType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ApproverDate")
+                    b.Property<DateTime>("ApprovalDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ApprovalType")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -436,7 +414,7 @@ namespace Ellipse.Data.Migrations
 
                     b.HasIndex("RequestId");
 
-                    b.ToTable("RequestApproverActions");
+                    b.ToTable("RequestApprovals");
                 });
 
             modelBuilder.Entity("Ellipse.Data.Entities.Document", b =>
@@ -498,7 +476,7 @@ namespace Ellipse.Data.Migrations
                     b.Navigation("E");
                 });
 
-            modelBuilder.Entity("Ellipse.Data.Entities.RequestApproverAction", b =>
+            modelBuilder.Entity("Ellipse.Data.Entities.RequestApproval", b =>
                 {
                     b.HasOne("Ellipse.Data.Entities.Request", "Request")
                         .WithMany()

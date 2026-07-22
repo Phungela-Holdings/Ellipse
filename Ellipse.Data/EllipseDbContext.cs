@@ -20,5 +20,6 @@ namespace Ellipse.Data
         public DbSet<Document> Documents { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Environment> Environments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }
