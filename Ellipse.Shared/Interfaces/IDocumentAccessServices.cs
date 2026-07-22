@@ -1,8 +1,4 @@
-﻿using Ellipse.Shared.DTOs.Document;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Text;
+﻿using Ellipse.Shared.DTOs.DocumentAccess;
 
 namespace Ellipse.Shared.Interfaces
 {

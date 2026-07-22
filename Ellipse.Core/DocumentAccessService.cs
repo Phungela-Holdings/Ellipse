@@ -1,10 +1,9 @@
-using Ellipse.Core.Extensions;
 using Ellipse.Data;
-using Ellipse.Shared.DTOs.Document;
 using Ellipse.Shared.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using Ellipse.Core.Extensions;
+using System;
 
-namespace Ellipse.Core
+namespace Ellipse.Shared.DTOs.DocumentAccess
 {
     public class DocumentAccessService : IDocumentAccessService
     {
@@ -17,11 +16,9 @@ namespace Ellipse.Core
 
         public async Task<List<DocumentAccessDetails>> GetDocumentAccessAsync(int documentId)
         {
-            var documentAccesses = await _context.DocumentAccesses
+            return _context.DocumentAccesses
             .Where(x => x.DocumentId == documentId)
-            .ToListAsync();
-
-            return documentAccesses.ToListDetails();
+            .ToList().ToListDetails();
         }
 
         public async Task<DocumentAccessDetails> CreateDocumentAccessAsync(DocumentAccessDetails documentAccessDetails)
@@ -31,7 +28,7 @@ namespace Ellipse.Core
 
             _context.DocumentAccesses.Add(documentAccess);
             await _context.SaveChangesAsync();
-            
+
             return documentAccess.ToDetails();
         }
 
@@ -65,9 +62,8 @@ namespace Ellipse.Core
                 .Skip((searchCriteria.PageNumber - 1) * searchCriteria.PageSize)
                 .Take(searchCriteria.PageSize);
             }
-            
-            var documentAccesses = await query.ToListAsync();
-            return documentAccesses.ToListDetails();
+
+            return query.ToList().ToListDetails();
         }
     }
 }

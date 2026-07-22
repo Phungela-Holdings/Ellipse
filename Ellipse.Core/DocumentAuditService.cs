@@ -24,7 +24,10 @@ namespace Ellipse.Core
                 return false;
             }
 
-            await _context.DocumentAudits.AddAsync(documentAuditDetails.ToEntity());
+            var documentAudit = documentAuditDetails.ToEntity();
+            documentAudit.Document = document;
+
+            await _context.DocumentAudits.AddAsync(documentAudit);
             await _context.SaveChangesAsync();
 
             return true;
