@@ -4,6 +4,7 @@ using Ellipse.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ellipse.Data.Migrations
 {
     [DbContext(typeof(EllipseDbContext))]
-    partial class EllipseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260720124427_RenameRequestApproverAction")]
+    partial class RenameRequestApproverAction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,59 +230,6 @@ namespace Ellipse.Data.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Ellipse.Data.Entities.Environment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<bool>("RequiresTraining")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Environments");
-                });
-
-            modelBuilder.Entity("Ellipse.Data.Entities.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("RecipientEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SendDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Read")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RequestId");
-
-                    b.ToTable("Notifications");
-                });
-
             modelBuilder.Entity("Ellipse.Data.Entities.Request", b =>
                 {
                     b.Property<int>("Id")
@@ -470,17 +420,6 @@ namespace Ellipse.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Document");
-                });
-
-            modelBuilder.Entity("Ellipse.Data.Entities.Notification", b =>
-                {
-                    b.HasOne("Ellipse.Data.Entities.Request", "Request")
-                        .WithMany()
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Request");
                 });
 
             modelBuilder.Entity("Ellipse.Data.Entities.Request", b =>
