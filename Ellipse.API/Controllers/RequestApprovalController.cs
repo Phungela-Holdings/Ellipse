@@ -8,23 +8,23 @@ namespace Ellipse.API.Controllers
     [ApiController]
     public class RequestApprovalController : ControllerBase
     {
-        private readonly IRequestApprovalService _requestApprovalService;
+        private readonly IRequestApproverActionService _requestApproverActionService;
         private readonly ILogger<RequestApprovalController> _logger;
 
         public RequestApprovalController(
-            IRequestApprovalService requestApprovalService,
+            IRequestApproverActionService requestApproverActionService,
             ILogger<RequestApprovalController> logger)
         {
-            _requestApprovalService = requestApprovalService;
+            _requestApproverActionService = requestApproverActionService;
             _logger = logger;
         }
 
         [HttpPost]
-        public ActionResult<bool> CreateApprovals(RequestApprovalDetails requestApprovalDetails)
+        public ActionResult<bool> CreateApprovals(RequestApproverActionDetails requestApproverActionDetails)
         {
             try
             {
-                var result = _requestApprovalService.CreateApprovals(requestApprovalDetails);
+                var result = _requestApproverActionService.CreateApproverActionAsync(requestApproverActionDetails);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -35,11 +35,11 @@ namespace Ellipse.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<RequestApprovalDetails>> GetApprovalsForRequest(int requestId)
+        public ActionResult<List<RequestApproverActionDetails>> GetApprovalsForRequest(int requestId)
         {
             try
             {
-                var result = _requestApprovalService.GetApprovalsForRequest(requestId);
+                var result = _requestApproverActionService.GetApproverActionForRequestAsync(requestId);
                 return Ok(result);
             }
             catch (Exception ex)
