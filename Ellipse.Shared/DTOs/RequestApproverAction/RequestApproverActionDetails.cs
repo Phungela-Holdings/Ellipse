@@ -2,7 +2,7 @@
 
 namespace Ellipse.Shared.DTOs
 {
-    public class RequestApprovalDetails
+    public class RequestApproverActionDetails
     {
         public int Id { get; set; }
 
@@ -14,10 +14,11 @@ namespace Ellipse.Shared.DTOs
 
         public long ServiceNumber { get; set; }
 
-        public DateTime ApprovalDate { get; set; }
+        public DateTime ApproverDate { get; set; }
 
         public int RequestId { get; set; }
 
-        public string ApprovalType { get; set; } = string.Empty;
+        public string ApproverType { get; set; } = string.Empty;
+        public string ActionType { get; set; }
     }
 }

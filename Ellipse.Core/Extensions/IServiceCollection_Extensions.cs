@@ -33,7 +33,7 @@ namespace Ellipse.Core.Extensions
             services.AddScoped<IDocumentAuditService, DocumentAuditService>();
             services.AddScoped<IEmployeeServices, EmployeeServices>();
             services.AddScoped<IContractorServices, ContractorServices>();
-            services.AddScoped<IRequestApprovalService, RequestApprovalService>();
+            services.AddScoped<IRequestApproverActionService, RequestApproverActionService>();
         }
 
     }

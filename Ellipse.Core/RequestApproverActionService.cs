@@ -6,29 +6,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ellipse.Core
 {
-    public class RequestApprovalService : IRequestApprovalService
+    public class RequestApproverActionService : IRequestApproverActionService
     {
         private readonly EllipseDbContext _context;
 
-        public RequestApprovalService(EllipseDbContext context)
+        public RequestApproverActionService(EllipseDbContext context)
         {
             _context = context;
         }
 
-        public async Task<bool> CreateApprovalsAsync(RequestApprovalDetails requestApprovalDetails)
+        public async Task<bool> CreateApprovalsAsync(RequestApproverActionDetails requestApproverActionDetails)
         {
-            var requestApproval = requestApprovalDetails.ToEntity();
+            var requestApproverAction = requestApproverActionDetails.ToEntity();
 
-            await _context.RequestApprovals.AddAsync(requestApproval);
+            await _context.RequestApproverActions.AddAsync(requestApproverAction);
 
             await _context.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<List<RequestApprovalDetails>> GetApprovalsForRequestAsync(int requestId)
+        public async Task<List<RequestApproverActionDetails>> GetApprovalsForRequestAsync(int requestId)
         {
-            var approvals = await _context.RequestApprovals
+            var approvals = await _context.RequestApproverActions
                                           .Where(x => x.RequestId == requestId)
                                           .ToListAsync();
 
