@@ -23,7 +23,6 @@ namespace Ellipse.Data.Entities
 
         public DateTime SendDate { get; set; }
 
-        [Required]
-        public string Status { get; set; }
+        public bool Read { get; set; }
     }
 }

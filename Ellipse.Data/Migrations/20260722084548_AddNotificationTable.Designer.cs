@@ -248,9 +248,8 @@ namespace Ellipse.Data.Migrations
                     b.Property<DateTime>("SendDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Read")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Type")
                         .IsRequired()

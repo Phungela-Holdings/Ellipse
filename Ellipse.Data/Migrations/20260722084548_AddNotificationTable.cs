@@ -21,7 +21,7 @@ namespace Ellipse.Data.Migrations
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RecipientEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SendDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Read = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
