@@ -2,7 +2,7 @@
 using Ellipse.Core.Extensions;
 using Ellipse.Data;
 using Ellipse.Shared.Interfaces;
-using Ellipse.Shared.DTOs.DocumentDetails;
+using Ellipse.Shared.DTOs.Document;
 
 namespace Ellipse.Core
 {
@@ -71,7 +71,7 @@ namespace Ellipse.Core
                 return false;
             }
 
-            document.Active = false;
+            document.IsActive = false;
 
             await _context.SaveChangesAsync();
 

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Ellipse.Data.Entities;
-using Ellipse.Shared.DTOs.DocumentDetails;
+﻿using Ellipse.Data.Entities;
+using Ellipse.Shared.DTOs.Document;
+
 
 namespace Ellipse.Core.Extensions
 {
@@ -17,7 +16,7 @@ namespace Ellipse.Core.Extensions
                 DateModified = document.DateModified,
                 DocumentType = document.DocumentType,
                 RequestId = document.RequestId,
-                Active = document.Active,
+                Active = document.IsActive,
                 Archived = document.Archived,
                 ArchivedDate = document.ArchivedDate
             };
@@ -29,11 +28,11 @@ namespace Ellipse.Core.Extensions
             {
                 Id = documentDetails.Id,
                 Data = documentDetails.Data,
-                DateUploaded = DateTime.Now, 
+                DateUploaded = DateTime.Now,
                 DateModified = documentDetails.DateModified,
                 DocumentType = documentDetails.DocumentType,
                 RequestId = documentDetails.RequestId,
-                Active = documentDetails.Active,
+                IsActive = documentDetails.Active,
                 Archived = documentDetails.Archived,
                 ArchivedDate = documentDetails.ArchivedDate
             };
