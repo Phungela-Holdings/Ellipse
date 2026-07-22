@@ -8,7 +8,7 @@ namespace Ellipse.Data.Entities
     public class Environment
     {
         [Key]
-        public int EnvironmentId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(20)]
