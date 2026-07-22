@@ -1,5 +1,5 @@
 using Ellipse.Data.Entities;
-using Ellipse.Shared.DTOs.Document;
+using Ellipse.Shared.DTOs.DocumentAccess;
 
 namespace Ellipse.Core.Extensions
 {

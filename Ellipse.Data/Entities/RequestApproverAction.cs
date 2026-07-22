@@ -5,7 +5,7 @@ using Ellipse.Shared.Enums;
 
 namespace Ellipse.Data.Entities
 {
-    public class RequestApproval
+    public class RequestApproverAction
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,7 +21,7 @@ namespace Ellipse.Data.Entities
 
         public long ServiceNumber { get; set; }
 
-        public DateTime ApprovalDate { get; set; }
+        public DateTime ApproverDate { get; set; }
 
     
         public int RequestId { get; set; }
@@ -29,6 +29,7 @@ namespace Ellipse.Data.Entities
         [ForeignKey(nameof(RequestId))]
         public Request Request { get; set; }
 
-        public ApprovalType ApprovalType { get; set; }
+        public ApproveType ApproveType { get; set; }
+        public string ActionType {  get; set; }
     }
 }
