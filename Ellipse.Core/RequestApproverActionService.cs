@@ -15,7 +15,7 @@ namespace Ellipse.Core
             _context = context;
         }
 
-        public async Task<bool> CreateApprovalsAsync(RequestApproverActionDetails requestApproverActionDetails)
+        public async Task<bool> CreateApproverActionAsync(RequestApproverActionDetails requestApproverActionDetails)
         {
             var requestApproverAction = requestApproverActionDetails.ToEntity();
 
@@ -26,7 +26,7 @@ namespace Ellipse.Core
             return true;
         }
 
-        public async Task<List<RequestApproverActionDetails>> GetApprovalsForRequestAsync(int requestId)
+        public async Task<List<RequestApproverActionDetails>> GetApproverActionForRequestAsync(int requestId)
         {
             var approvals = await _context.RequestApproverActions
                                           .Where(x => x.RequestId == requestId)
