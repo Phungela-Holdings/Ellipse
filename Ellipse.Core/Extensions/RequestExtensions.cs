@@ -1,11 +1,15 @@
-﻿
-using Ellipse.Data.Entities;
+﻿using Ellipse.Data.Entities;
 using Ellipse.Shared.DTOs.Request;
 
 namespace Ellipse.Core.Extensions
 {
     public static class RequestExtensions
     {
+        public static void UpdateStatus(this Request request)
+        {
+            //ToDo: Implement logic to update the status of the request based on certain conditions
+        }
+
         public static RequestDetails ToDetails(this Request request)
         {
             return new RequestDetails
@@ -14,7 +18,32 @@ namespace Ellipse.Core.Extensions
                 Id = request.Id,
                 RequestedDate = request.RequestedDate,
                 StartDate = request.StartDate,
-                Status = request.Status
+                Status = request.Status,
+                EllipseUserId = request.EllipseUserId,
+                EllipsePosition = request.EllipsePosition,
+                MenuAccess = request.MenuAccess,
+                BusinessJustification = request.BusinessJustification,
+                RequestType = request.RequestType,
+                Environment = request.Environment,
+                UserAccessType = request.UserAccessType,
+                AdditionalUserAccess = request.AdditionalUserAccess,
+                userId = request.userId,
+                UserType = request.UserType,
+                //Documents = request.Document  To do
+                //Contractor = request.Contractor  To do
+                TemporaryPosition = request.TemporaryPosition,
+                TemporaryPostId = request.TemporaryPostId,
+                MissingDocuments = request.MissingDocuments,
+                LineManagerApproved = request.LineManagerApproval != null,
+                TrainingVerified = request.TrainingApproval != null,
+                ICTManagerApproved = request.ICTManagerApproval != null,
+                HCSystemsAdminApproved = request.HcAdminApproval != null,
+                TrainingCompletionDate = request.TrainingCompletionDate,
+                RequestClosed = request.RequestClosed,
+                HcAdminApprovalId = request.HcAdminApprovalId,
+                LineManagerApprovalId = request.LineManagerApprovalId,
+                TrainingApprovalId = request.TrainingApprovalId,
+                ICTManagerApprovalId = request.ICTManagerApprovalId,
             };
         }
 
@@ -24,9 +53,34 @@ namespace Ellipse.Core.Extensions
             {
                 EndDate = requestDetails.EndDate,
                 Id = requestDetails.Id,
-                RequestedDate = requestDetails.RequestedDate,
+                RequestedDate = DateTime.Now,
                 StartDate = requestDetails.StartDate,
-                Status = requestDetails.Status
+                Status = "Awaiting Line Manager Approval", //ToDo use enum instead of hardcoded string
+                EllipseUserId = requestDetails.EllipseUserId,
+                EllipsePosition = requestDetails.EllipsePosition,
+                MenuAccess = requestDetails.MenuAccess,
+                BusinessJustification = requestDetails.BusinessJustification,
+                RequestType = requestDetails.RequestType,
+                Environment = requestDetails.Environment,
+                UserAccessType = requestDetails.UserAccessType,
+                AdditionalUserAccess = requestDetails.AdditionalUserAccess,
+                userId = requestDetails.userId,
+                UserType = requestDetails.UserType,
+                //Documents = requestDetails.Document  To do
+                //Contractor = requestDetails.Contractor  To do
+                TemporaryPosition = requestDetails.TemporaryPosition,
+                TemporaryPostId = requestDetails.TemporaryPostId,
+                MissingDocuments = requestDetails.MissingDocuments,
+                //LineManagerApproved = requestDetails.LineManagerApproved,
+                //TrainingVerified = requestDetails.TrainingVerified,
+                //ICTManagerApproved = requestDetails.ICTManagerApproved,
+                //HCSystemsAdminApproved = requestDetails.HCSystemsAdminApproved,
+                TrainingCompletionDate = requestDetails.TrainingCompletionDate,
+                RequestClosed = requestDetails.RequestClosed,
+                HcAdminApprovalId = requestDetails.HcAdminApprovalId,
+                LineManagerApprovalId = requestDetails.LineManagerApprovalId,
+                TrainingApprovalId = requestDetails.TrainingApprovalId,
+                ICTManagerApprovalId = requestDetails.ICTManagerApprovalId,
             };
         }
 
