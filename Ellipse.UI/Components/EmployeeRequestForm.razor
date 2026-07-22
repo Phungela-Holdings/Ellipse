@@ -1,0 +1,81 @@
+﻿<div className="flex flex-col items-center justify-center h-full p-10 text-center space-y-6 bg-background">
+        
+        <div className="w-24 h-24 rounded-full bg-emerald-100 border-4 border-emerald-400 flex items-center justify-center">
+          <CheckCircle2 size={48} className="text-emerald-600" />
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-foreground"  style="font-family:sans-serif}">
+            Request Submitted Successfully
+          </h2>
+          <p className="text-sm text-foreground/50 max-w-sm">
+            Your Ellipse access request has been submitted and is now pending approval. You will be notified at each stage of the workflow.
+          </p>
+        </div>
+
+        <div className="bg-white border border-border rounded-2xl shadow-sm p-6 w-full max-w-sm text-left space-y-3">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span className="text-[11px] font-bold text-foreground/50 uppercase tracking-wider">Request Details</span>
+          </div>
+          {[
+            ["Request Reference", refNum],
+            ["Request Type",      reqType],
+            ["Environment",       env],
+            ["Date Submitted",    submittedAt.toLocaleDateString("en-ZA",{day:"2-digit",month:"short",year:"numeric"})],
+            ["Time Submitted",    submittedAt.toLocaleTimeString("en-ZA",{hour:"2-digit",minute:"2-digit"})],
+            ["Current Status",    submitterRole === "ict-manager" ? "Submitted — Awaiting ICT Manager's Line Manager Approval" : "Submitted — Awaiting Line Manager Approval"],
+          ].map(([l,v]) => (
+            <div key={l} className="flex justify-between items-start text-xs border-b border-border/50 pb-2 last:border-0 last:pb-0">
+              <span className="text-foreground/50 font-semibold shrink-0 mr-4">{l}</span>
+              <span className={`text-right font-bold ${l === "Request Reference" ? "text-primary font-mono" : "text-foreground"}`}>{v}</span>
+            </div>
+          ))}
+        </div>
+
+        
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 w-full max-w-sm text-left">
+          <p className="text-xs font-bold text-blue-800 mb-2 flex items-center gap-1.5">
+            <AlertCircle size={12} /> What happens next?
+          </p>
+          <ol className="text-xs text-blue-700 space-y-1 list-decimal list-inside">
+            {submitterRole === "ict-manager"
+              ? <li>Your Line Manager will receive a notification to review and approve this request.</li>
+              : <li>Your Line Manager will receive a notification to review and approve.</li>
+            }
+            {env === "PROD" && <li>The Training Centre Representative will verify training completion.</li>}
+            {env !== "PROD" && submitterRole !== "ict-manager" && <li>The ICT Manager will review the request.</li>}
+            {env !== "PROD" && submitterRole === "ict-manager" && <li>The request will continue through the standard ICT Manager workflow.</li>}
+            <li>The HC System Administrator will implement the access.</li>
+          </ol>
+        </div>
+
+        <button
+          onclick="() => onClose()"
+          className="px-8 py-3 text-white rounded-xl text-sm font-bold hover:opacity-90 transition-opacity shadow-sm"
+          style={{ background: "#1a2d6e" }}>
+          Return to Dashboard
+        </button>
+      </div>
+
+@code {
+    private string[] requestTypes = {
+  "New Employee & Create Signon",
+  "Primary Position Amendment",
+  "Secondary Position Amendment",
+  "Signon-Menu",
+  "Temporary/Acting Position Assignment",
+  "Terminate & Delete Signon",
+  "Terminate Secondary Position",
+  "Update Existing Employee Record Details",
+  "Other",
+    };
+
+    private string[] terminateTypes = ["Terminate & Delete Signon", "Terminate Secondary Position"];
+    private string actingType = "Temporary/Acting Position Assignment";
+
+    public void onClose()
+    {
+        
+    }
+}
