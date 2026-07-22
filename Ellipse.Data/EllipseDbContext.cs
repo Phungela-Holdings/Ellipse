@@ -1,5 +1,7 @@
-﻿using Ellipse.Data.Entities;
+﻿using System;
+using Ellipse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Environment = Ellipse.Data.Entities.Environment;
 
 namespace Ellipse.Data
 {
@@ -17,5 +19,6 @@ namespace Ellipse.Data
         public DbSet<RequestApproval> RequestApprovals { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Environment> Environments { get; set; }
     }
 }
