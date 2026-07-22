@@ -1,5 +1,5 @@
-﻿using Ellipse.Shared.DTOs;
-using Ellipse.Shared.DTOs.Request;
+﻿using Ellipse.Shared.DTOs.Request;
+using Ellipse.Shared.DTOs.RequestApproverAction;
 
 namespace Ellipse.Shared.Interfaces
 {
@@ -9,26 +9,26 @@ namespace Ellipse.Shared.Interfaces
 
         Task<List<RequestDetails>> GetRequests();
 
-        Task<RequestDetails> GetRequest(int requestId);
+        Task<RequestDetails> GetRequestDetails(int requestId);
 
         Task<List<RequestDetails>> SearchRequest(string searchString);
 
         Task<RequestDetails> UpdateRequest(RequestDetails requestDetails);
 
-        Task<bool> LineManagerRequestApproval(int requestId, RequestApprovalDetails requestApproval);
+        Task<bool> LineManagerRequestApproval(int requestId, RequestApproverActionDetails requestApprover);
 
-        Task<bool> LineManagerRequestRejection(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null);
+        Task<bool> LineManagerRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason);
 
-        Task<bool> ICTManagerRequestApproval(int requestId, RequestApprovalDetails requestApproval);
+        Task<bool> ICTManagerRequestApproval(int requestId, RequestApproverActionDetails requestApprover);
 
-        Task<bool> ICTManagerRequestRejection(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null);
+        Task<bool> ICTManagerRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason);
 
-        Task<bool> TrainingCenterRequestVerification(int requestId, RequestApprovalDetails requestApproval, DateTime trainingDate, string verifiedBy);
+        Task<bool> TrainingCenterRequestVerification(int requestId, RequestApproverActionDetails requestApprover, DateTime trainingDate, string verifiedBy);
 
-        Task<bool> TrainingCenterRequestUnverified(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null);
+        Task<bool> UnverifiedTraining(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason);
 
-        Task<bool> HcSystemsAdminRequestImplementation(int requestId, RequestApprovalDetails requestApproval, DateTime accessImplementationDate, string ellipseUserId);
+        Task<bool> HcOfficerRequestImplementation(int requestId, RequestApproverActionDetails requestApprover, DateTime accessImplementationDate, long ellipseUserId);
 
-        Task<bool> HcSystemsAdminRequestRejections(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null);
+        Task<bool> HcSystemsAdminRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason);
     }
 }

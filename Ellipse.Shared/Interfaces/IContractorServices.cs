@@ -1,8 +1,4 @@
-﻿using Ellipse.Shared.DTOs.Contract;
-using Ellipse.Shared.DTOs.Request;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Ellipse.Shared.DTOs.Contractor;
 
 namespace Ellipse.Shared.Interfaces
 {

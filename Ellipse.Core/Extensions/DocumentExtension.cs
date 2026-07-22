@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Ellipse.Data.Entities;
-using Ellipse.Shared.DTOs.DocumentDetails;
+﻿using Ellipse.Data.Entities;
+using Ellipse.Shared.DTOs.Document;
 
 namespace Ellipse.Core.Extensions
 {
@@ -39,7 +37,7 @@ namespace Ellipse.Core.Extensions
             };
         }
 
-        public static List<DocumentDetails> ToListDetails(this List<Document> documents)
+        public static List<DocumentDetails> ToDetailsList(this List<Document> documents)
         {
             return documents.Select(document => document.ToDetails()).ToList();
         }

@@ -1,33 +1,49 @@
-﻿using Ellipse.Shared.DTOs.DocumentAudit;
+﻿using Ellipse.Core.Extensions;
+using Ellipse.Data;
+using Ellipse.Shared.DTOs.DocumentAudit;
 using Ellipse.Shared.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ellipse.Core
 {
     public class DocumentAuditService : IDocumentAuditService
     {
-        public bool CreateDocumentAudit(DocumentAuditDetails documentAuditDetails)
+        private readonly EllipseDbContext _context;
+
+        public DocumentAuditService(EllipseDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public DocumentAuditDetails GetDocumentAuditById(int id)
+        public async Task<List<DocumentAuditDetails>> GetDocumentAuditsByDocumentAsync(int documentId)
         {
-            throw new NotImplementedException();
+            var audits = await _context.DocumentAudits.Include(o => o.Document).Where(o => o.DocumentId == documentId).ToListAsync();
+
+            return audits.ToDetailsList();
         }
 
-        public List<DocumentAuditDetails> GetDocumentAuditsByDocument(int documentId)
+        public async Task<List<DocumentAuditDetails>> GetAllDocumentAuditsAsync()
         {
-            throw new NotImplementedException();
+            var audits = await _context.DocumentAudits.Include(o => o.Document).ToListAsync();
+
+            return audits.ToDetailsList();
         }
 
-        public List<DocumentAuditDetails> GetAllDocumentAudits()
+        public async Task<bool> CreateDocumentAudit(DocumentAuditDetails documentAuditDetails)
         {
-            throw new NotImplementedException();
-        }
+            var document = await _context.Documents.FindAsync(documentAuditDetails.DocumentId);
 
-        public bool DeleteDocumentAudit(int id)
-        {
-            throw new NotImplementedException();
+            if(document == null)
+            {
+                return false;
+            }
+
+            var documentAudit = documentAuditDetails.ToEntity();
+            documentAudit.Document = document;
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

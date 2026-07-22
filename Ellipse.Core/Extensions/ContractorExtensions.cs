@@ -1,6 +1,5 @@
-﻿
-using Ellipse.Shared.DTOs.Contract;
-using Ellipse.Data.Entities;
+﻿using Ellipse.Data.Entities;
+using Ellipse.Shared.DTOs.Contractor;
 
 namespace Ellipse.Core.Extensions
 {
@@ -21,7 +20,8 @@ namespace Ellipse.Core.Extensions
                 StartDate = contractor.StartDate,
                 EndDate = contractor.EndDate,
                 Department = contractor.Department,
-                Branch = contractor.Branch
+                Branch = contractor.Branch,
+                Requests = contractor.Requests.Select(o => o.ToSummary()).ToList(),
             };
         }
 

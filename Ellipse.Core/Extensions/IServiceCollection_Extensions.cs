@@ -1,10 +1,8 @@
-﻿using Ellipse.Core;
-using Ellipse.Data;
-using Ellipse.Shared.DTOs.DocumentAccess;
+﻿using Ellipse.Data;
 using Ellipse.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection; 
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Ellipse.Core.Extensions
 

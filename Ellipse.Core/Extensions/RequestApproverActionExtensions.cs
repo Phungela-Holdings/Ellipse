@@ -1,5 +1,5 @@
 ﻿using Ellipse.Data.Entities;
-using Ellipse.Shared.DTOs;
+using Ellipse.Shared.DTOs.RequestApproverAction;
 using Ellipse.Shared.Enums;
 
 namespace Ellipse.Core.Extensions
@@ -15,13 +15,14 @@ namespace Ellipse.Core.Extensions
                 Surname = requestApproverAction.Surname,
                 PostId = requestApproverAction.PostId,
                 ServiceNumber = requestApproverAction.ServiceNumber,
-                ApproverDate = requestApproverAction.ApproverDate,
+                ApproverDate = requestApproverAction.ActionDate,
                 RequestId = requestApproverAction.RequestId,
-                ApproverType = requestApproverAction.ApproveType.ToString(),
+                ApproverType = requestApproverAction.ApproverType,
+                ActionType = requestApproverAction.ActionType
             };
         }
 
-        public static RequestApproverAction ToEntity(this RequestApproverActionDetails requestApproverActionDetails)
+        public static RequestApproverAction ToEntity(this RequestApproverActionDetails requestApproverActionDetails, Request request, ApproverType approverType, ApproverActionType actionType)
         {
             return new RequestApproverAction
             {
@@ -30,13 +31,15 @@ namespace Ellipse.Core.Extensions
                 Surname = requestApproverActionDetails.Surname,
                 PostId = requestApproverActionDetails.PostId,
                 ServiceNumber = requestApproverActionDetails.ServiceNumber,
-                ApproverDate = requestApproverActionDetails.ApproverDate,
-                RequestId = requestApproverActionDetails.RequestId,
-                ApproveType = Enum.Parse<ApproveType>(requestApproverActionDetails.ApproverType),
+                ActionDate = requestApproverActionDetails.ApproverDate,
+                ApproverType = approverType.GetDescription(),
+                RequestId = request.Id,
+                Request = request,
+                ActionType = actionType.GetDescription()
             };
         }
 
-        public static List<RequestApproverActionDetails> ToListDetails(this List<RequestApproverAction> requestApproverActions)
+        public static List<RequestApproverActionDetails> ToDetailsList(this List<RequestApproverAction> requestApproverActions)
         {
             return requestApproverActions.Select(requestApproverAction => requestApproverAction.ToDetails()).ToList();
         }

@@ -27,7 +27,7 @@ namespace Ellipse.Core.Extensions
             };
         }
 
-        public static List<DocumentAccessDetails> ToListDetails(this List<DocumentAccess> documentAccesses)
+        public static List<DocumentAccessDetails> ToDetailsList(this List<DocumentAccess> documentAccesses)
         {
             return documentAccesses.Select(documentAccess => documentAccess.ToDetails()).ToList();
         }

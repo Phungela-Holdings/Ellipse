@@ -1,12 +1,9 @@
-﻿using Ellipse.Shared.DTOs;
-using Ellipse.Shared.DTOs.DocumentDetails;
+﻿using Ellipse.Shared.DTOs.Document;
 
 namespace Ellipse.Shared.Interfaces
 {
     public interface IDocumentService
     {
-        Task<DocumentDetails> CreateDocument(DocumentDetails documentDetails);
-
         Task<DocumentDetails> GetDocumentById(int documentId);
 
         Task<List<DocumentDetails>> GetRequestDocuments(int requestId);

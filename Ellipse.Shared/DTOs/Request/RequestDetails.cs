@@ -1,4 +1,4 @@
-﻿using Ellipse.Shared.DTOs.Contract;
+﻿using Ellipse.Shared.DTOs.Contractor;
 using Ellipse.Shared.DTOs.Document;
 using Ellipse.Shared.DTOs.Employee;
 
@@ -37,8 +37,10 @@ namespace Ellipse.Shared.DTOs.Request
         public string UserType { get; set; }
 
         public List<DocumentDetails> Documents { get; set; }
+
         public ContractorSummary? Contractor { get; set; }
-        public EmployeeSummary? E { get; set; }
+
+        public EmployeeSummary? Employee { get; set; }
 
         public string? TemporaryPosition { get; set; }
 

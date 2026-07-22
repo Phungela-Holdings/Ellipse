@@ -12,9 +12,7 @@ namespace Ellipse.Core.Extensions
                 Id = documentAudit.Id,
                 DocumentId = documentAudit.DocumentId,
                 DateCreated = documentAudit.DateCreated,
-                AuditType = documentAudit.AuditType,
-                DocumentData = documentAudit.DocumentData,
-                OldDocumentData = documentAudit.OldDocumentData
+                AuditType = documentAudit.AuditType
             };
         }
 
@@ -23,12 +21,14 @@ namespace Ellipse.Core.Extensions
             return new DocumentAudit
             {
                 Id = documentAuditDetails.Id,
-                DocumentId = documentAuditDetails.DocumentId,
                 DateCreated = documentAuditDetails.DateCreated,
                 AuditType = documentAuditDetails.AuditType,
-                DocumentData = documentAuditDetails.DocumentData,
-                OldDocumentData = documentAuditDetails.OldDocumentData
             };
+        }
+
+        public static List<DocumentAuditDetails> ToDetailsList(this List<DocumentAudit> documentAudits)
+        {
+            return documentAudits.Select(o => o.ToDetails()).ToList();
         }
     }
 }

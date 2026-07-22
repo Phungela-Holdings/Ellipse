@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace Ellipse.Shared.Enums
 {
-    public enum ApproveType
+    public enum ApproverType
     {
+        [Description("Line Manager")]
         LineManager = 0,
-        NavigationTrainingComplete = 1,
-        FundamentalsTrainingComplete = 2,
-        HCSystemsAdministrator = 3,
-        ICTManager = 4
-
+        [Description("Training Center Representative")]
+        TrainingCenterRepresentative = 1,
+        [Description("HC Officer")]
+        HCOfficer = 2,
+        [Description("ICT Manager")]
+        ICTManager = 3,
+        [Description("Unknown Approver")]
+        UnknownApprover = 4,
     }
 }

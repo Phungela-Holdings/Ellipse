@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace Ellipse.Shared.DTOs
+﻿namespace Ellipse.Shared.DTOs.RequestApproverAction
 {
     public class RequestApproverActionDetails
     {
         public int Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; } 
 
-        public string Surname { get; set; } = string.Empty;
+        public string Surname { get; set; } 
 
         public long PostId { get; set; }
 
@@ -18,7 +16,8 @@ namespace Ellipse.Shared.DTOs
 
         public int RequestId { get; set; }
 
-        public string ApproverType { get; set; } = string.Empty;
+        public string ApproverType { get; set; }
+
         public string ActionType { get; set; }
     }
 }

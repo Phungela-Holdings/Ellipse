@@ -1,8 +1,8 @@
 ﻿using Ellipse.Core.Extensions;
 using Ellipse.Data;
 using Ellipse.Data.Entities;
-using Ellipse.Shared.DTOs;
 using Ellipse.Shared.DTOs.Request;
+using Ellipse.Shared.DTOs.RequestApproverAction;
 using Ellipse.Shared.Enums;
 using Ellipse.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -25,56 +25,75 @@ namespace Ellipse.Core
             return requests.ToListDetails();
         }
 
-        public async Task<RequestDetails> CreateRequest(NewRequestDetails requestDetails)
+        public async Task<RequestDetails> CreateRequest(NewRequestDetails newRequestDetails)
         {
-            if (requestDetails?.RequestDetails == null)
+            if (newRequestDetails?.RequestDetails == null)
                 throw new ArgumentException("RequestDetails cannot be null.");
 
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
-                var request = requestDetails.RequestDetails.ToEntity();
+                var request = newRequestDetails.RequestDetails.ToEntity();
 
-                if (requestDetails.EmployeeDetails != null)
+                if (newRequestDetails.EmployeeDetails != null)
                 {
                     var employee = await _context.Employees
-                        .FindAsync(requestDetails.EmployeeDetails.EmailAddress);
+                        .FindAsync(newRequestDetails.EmployeeDetails.EmailAddress);
 
                     if (employee == null)
                     {
-                        employee = requestDetails.EmployeeDetails.ToEntity();
+                        employee = newRequestDetails.EmployeeDetails.ToEntity();
 
                         await _context.Employees.AddAsync(employee);
                         await _context.SaveChangesAsync();
                     }
+                    else
+                    {
+                        var employeeService = new EmployeeServices(_context);
+                        await employeeService.UpdateEmployeeAsync(newRequestDetails.EmployeeDetails);
+                    }
 
-                    // Previously only set when a NEW employee was created, so
-                    // requests linked to an existing employee never got the
-                    // relationship set. Now set unconditionally.
                     request.Employee = employee;
                 }
 
-                if (requestDetails.ContractorDetails != null)
+                if (newRequestDetails.ContractorDetails != null)
                 {
                     var contractor = await _context.Contractors
-                        .FindAsync(requestDetails.ContractorDetails.Id);
+                        .FindAsync(newRequestDetails.ContractorDetails.Id);
 
                     if (contractor == null)
                     {
-                        contractor = requestDetails.ContractorDetails.ToEntity();
+                        contractor = newRequestDetails.ContractorDetails.ToEntity();
 
                         await _context.Contractors.AddAsync(contractor);
                         await _context.SaveChangesAsync();
                     }
-
-                    // Same fix as above, for contractors.the contractor relationship is now set unconditionally.
+                    else
+                    {
+                        var contractorServices = new ContractorServices(_context);
+                        await contractorServices.UpdateContractorAsync(newRequestDetails.ContractorDetails);
+                    }
+                    
                     request.Contractor = contractor;
                 }
 
                 request.UpdateStatus();
                 await _context.Requests.AddAsync(request);
                 await _context.SaveChangesAsync();
+
+                if (newRequestDetails.Documents != null && newRequestDetails.Documents.Any())
+                {
+                    foreach (var documentDetails in newRequestDetails.Documents)
+                    {
+                        var document = documentDetails.ToEntity();
+                        document.RequestId = request.Id;
+
+                        await _context.Documents.AddAsync(document);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
                 await transaction.CommitAsync();
 
                 return request.ToDetails();
@@ -86,13 +105,9 @@ namespace Ellipse.Core
             }
         }
 
-        public async Task<RequestDetails> GetRequest(int requestId)
+        public async Task<RequestDetails> GetRequestDetails(int requestId)
         {
-            var request = await _context.Requests
-                .FirstOrDefaultAsync(r => r.Id == requestId);
-
-            if (request == null)
-                throw new KeyNotFoundException($"Request with Id {requestId} was not found.");
+            var request = await GetRequest(requestId);
 
             return request.ToDetails();
         }
@@ -118,180 +133,255 @@ namespace Ellipse.Core
 
         public async Task<RequestDetails> UpdateRequest(RequestDetails requestDetails)
         {
-            var existing = await _context.Requests
+            var request = await _context.Requests
                 .FirstOrDefaultAsync(r => r.Id == requestDetails.Id);
 
-            if (existing == null)
+            if (request == null)
                 throw new KeyNotFoundException($"Request with Id {requestDetails.Id} was not found.");
 
-            existing.Status = requestDetails.Status;
-            existing.StartDate = requestDetails.StartDate;
-            existing.EndDate = requestDetails.EndDate;
-            existing.EllipseUserId = requestDetails.EllipseUserId;
-            existing.EllipsePosition = requestDetails.EllipsePosition;
-            existing.MenuAccess = requestDetails.MenuAccess;
-            existing.BusinessJustification = requestDetails.BusinessJustification;
-            existing.RequestType = requestDetails.RequestType;
-            existing.Environment = requestDetails.Environment;
-            existing.UserAccessType = requestDetails.UserAccessType;
-            existing.AdditionalUserAccess = requestDetails.AdditionalUserAccess;
-            existing.userId = requestDetails.userId;
-            existing.UserType = requestDetails.UserType;
-            existing.TemporaryPosition = requestDetails.TemporaryPosition;
-            existing.TemporaryPostId = requestDetails.TemporaryPostId;
+            request.StartDate = requestDetails.StartDate;
+            request.EndDate = requestDetails.EndDate;
+            request.EllipseUserId = requestDetails.EllipseUserId;
+            request.EllipsePosition = requestDetails.EllipsePosition;
+            request.MenuAccess = requestDetails.MenuAccess;
+            request.BusinessJustification = requestDetails.BusinessJustification;
+            request.RequestType = requestDetails.RequestType;
+            request.Environment = requestDetails.Environment;
+            request.UserAccessType = requestDetails.UserAccessType;
+            request.AdditionalUserAccess = requestDetails.AdditionalUserAccess;
+            request.UserType = requestDetails.UserType;
+            request.TemporaryPosition = requestDetails.TemporaryPosition;
+            request.TemporaryPostId = requestDetails.TemporaryPostId;
 
-            await _context.SaveChangesAsync();
-
-            return existing.ToDetails();
-        }
-
-        public async Task<bool> LineManagerRequestApproval(int requestId, RequestApprovalDetails requestApproval)
-        {
-            var request = await GetRequestOrThrow(requestId);
-
-            var approval = BuildApprovalEntity(requestApproval, request, ApprovalType.LineManager);
-
-            await _context.RequestApprovals.AddAsync(approval);
-
-            // Linking the approval record is what represents "approved" for
-            // this stage - Request has no separate boolean flag.
-            request.LineManagerApproval = approval;
             request.UpdateStatus();
 
             await _context.SaveChangesAsync();
 
-            return true;
+            return request.ToDetails();
         }
 
-        public async Task<bool> LineManagerRequestRejection(int requestId, RequestApprovalDetails requestApproval, string rejectionReason)
+        public async Task<bool> LineManagerRequestApproval(int requestId, RequestApproverActionDetails requestApproverAction)
         {
-            var request = await GetRequestOrThrow(requestId);
+            var request = await GetRequest(requestId);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            // No approval record is created on rejection - only an approved
-            // stage gets a linked RequestApproval. The rejection itself is
-            // recorded on Request.Rejection.
-            request.Rejection = BuildRejectionMessage(requestApproval, "Line Manager", rejectionReason);
-            request.UpdateStatus();
+            try
+            {
+                var approverAction = BuildApproverActionEntity(requestApproverAction, request, ApproverType.LineManager, ApproverActionType.LineManagerApproved);
 
-            await _context.SaveChangesAsync();
+                await _context.RequestApproverActions.AddAsync(approverAction);
+                await _context.SaveChangesAsync();
 
-            return true;
+                request.LineManagerApprover = approverAction;
+                request.UpdateStatus();
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
-        public async Task<bool> ICTManagerRequestApproval(int requestId, RequestApprovalDetails requestApproval)
+        public async Task<bool> LineManagerRequestRejection(int requestId, RequestApproverActionDetails requestApproverAction, string rejectionReason)
         {
-            var request = await GetRequestOrThrow(requestId);
+            var request = await GetRequest(requestId);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            var approval = BuildApprovalEntity(requestApproval, request, ApprovalType.ICTManager);
+            try
+            {
+                var approverAction = BuildApproverActionEntity(requestApproverAction, request, ApproverType.LineManager, ApproverActionType.LineManagerRejected);
 
-            await _context.RequestApprovals.AddAsync(approval);
+                await _context.RequestApproverActions.AddAsync(approverAction);
+                await _context.SaveChangesAsync();
 
-            request.ICTManagerApproval = approval;
-            request.UpdateStatus();
+                request.RejectionReason = rejectionReason;
+                request.UpdateStatus();
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
-        public async Task<bool> ICTManagerRequestRejection(int requestId, RequestApprovalDetails requestApproval, string rejectionReason)
+        public async Task<bool> ICTManagerRequestApproval(int requestId, RequestApproverActionDetails requestApprover)
         {
-            var request = await GetRequestOrThrow(requestId);
+            var request = await GetRequest(requestId);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            request.Rejection = BuildRejectionMessage(requestApproval, "ICT Manager", rejectionReason);
-            request.UpdateStatus();
+            try
+            {
+                var approver = BuildApproverActionEntity(requestApprover, request, ApproverType.ICTManager, ApproverActionType.ICTManagerApproved);
 
-            await _context.SaveChangesAsync();
+                await _context.RequestApproverActions.AddAsync(approver);
 
-            return true;
+                request.ICTManagerApprover = approver;
+                request.UpdateStatus();
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
-        public async Task<bool> HcSystemsAdminRequestRejections(int requestId, string rejectionReason = null)
+        public async Task<bool> ICTManagerRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason)
         {
-            var request = await GetRequestOrThrow(requestId);
+            var request = await GetRequest(requestId);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            request.Rejection = BuildRejectionMessage(null, "HC Systems Administrator", rejectionReason);
-            request.UpdateStatus();
+            try
+            {
+                var approver = BuildApproverActionEntity(requestApprover, request, ApproverType.ICTManager, ApproverActionType.ICTManagerRejected);
 
-            await _context.SaveChangesAsync();
+                await _context.RequestApproverActions.AddAsync(approver);
+                await _context.SaveChangesAsync();
 
-            return true;
+                request.RejectionReason = rejectionReason;
+                request.UpdateStatus();
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
-        public Task<bool> TrainingCenterRequestVerification(int requestId, RequestApprovalDetails requestApproval, DateTime trainingDate, string verifiedBy)
+        public async Task<bool> HcSystemsAdminRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason)
         {
-            return TrainingCenterRequestVerification(requestId, requestApproval, ApprovalType.FundamentalsTrainingComplete, trainingDate, verifiedBy);
+            var request = await GetRequest(requestId);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var approver = BuildApproverActionEntity(requestApprover, request, ApproverType.HCOfficer, ApproverActionType.HcOfficerRejected);
+
+                await _context.RequestApproverActions.AddAsync(approver);
+                await _context.SaveChangesAsync();
+
+                request.RejectionReason = rejectionReason;
+                request.UpdateStatus();
+
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
-        // Overload allowing the caller to specify which training approval type
-        // is being recorded (NavigationTrainingComplete or
-        // FundamentalsTrainingComplete), since both share this workflow step.
-        private async Task<bool> TrainingCenterRequestVerification(int requestId, RequestApprovalDetails requestApproval, ApprovalType approvalType, DateTime trainingDate, string verifiedBy)
+        public async Task<bool> TrainingCenterRequestVerification(int requestId, RequestApproverActionDetails requestApprover, DateTime trainingDate, string verifiedBy)
         {
-            var request = await GetRequestOrThrow(requestId);
+            var request = await GetRequest(requestId);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            var approval = BuildApprovalEntity(requestApproval, request, approvalType);
+            try
+            {
+                var approval = BuildApproverActionEntity(requestApprover, request, ApproverType.TrainingCenterRepresentative, ApproverActionType.TrainingVerified);
 
-            await _context.RequestApprovals.AddAsync(approval);
+                await _context.RequestApproverActions.AddAsync(approval);
+                await _context.SaveChangesAsync();
 
-            request.TrainingApproval = approval;
-            request.TrainingCompletionDate = trainingDate;
-            request.UpdateStatus();
+                request.TrainingApprover = approval;
+                request.TrainingCompletionDate = trainingDate;
+                request.UpdateStatus();
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
-        public async Task<bool> HcSystemsAdminRequestRejections(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null)
+
+        public async Task<bool> HcOfficerRequestImplementation(int requestId, RequestApproverActionDetails requestApprover, DateTime accessImplementationDate, long ellipseUserId)
         {
-            var request = await GetRequestOrThrow(requestId);
+            var request = await GetRequest(requestId);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            request.Rejection = BuildRejectionMessage(requestApproval, "HC Systems Administrator", rejectionReason);
-            request.UpdateStatus();
+            try
+            {
+                var approver = BuildApproverActionEntity(requestApprover, request, ApproverType.HCOfficer, ApproverActionType.HcOfficerImplemented);
 
-            await _context.SaveChangesAsync();
+                await _context.RequestApproverActions.AddAsync(approver);
+                await _context.SaveChangesAsync();
 
-            return true;
+                request.HcOfficerApprover = approver;
+                request.EllipseUserId = ellipseUserId;
+                request.RequestClosed = true;
+                request.UpdateStatus();
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
-        public async Task<bool> HcSystemsAdminRequestImplementation(int requestId, RequestApprovalDetails requestApproval, DateTime accessImplementationDate, string ellipseUserId)
+        public async Task<bool> UnverifiedTraining(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason = null)
         {
-            var request = await GetRequestOrThrow(requestId);
+            var request = await GetRequest(requestId);
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            if (!long.TryParse(ellipseUserId, out var parsedEllipseUserId))
-                throw new ArgumentException($"'{ellipseUserId}' is not a valid Ellipse user id.", nameof(ellipseUserId));
+            try
+            {
+                var approver = BuildApproverActionEntity(requestApprover, request, ApproverType.TrainingCenterRepresentative, ApproverActionType.TrainingUnverified);
 
-            var approval = BuildApprovalEntity(requestApproval, request, ApprovalType.HCSystemsAdministrator);
+                await _context.RequestApproverActions.AddAsync(approver);
+                await _context.SaveChangesAsync();
 
-            await _context.RequestApprovals.AddAsync(approval);
+                request.RejectionReason = rejectionReason;
+                request.UpdateStatus();
 
-            request.HcAdminApproval = approval;
-            request.EllipseUserId = parsedEllipseUserId;
-            request.RequestClosed = true;
-            request.UpdateStatus();
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
 
-            await _context.SaveChangesAsync();
-
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
-        public async Task<bool> TrainingCenterRequestUnverified(int requestId, RequestApprovalDetails requestApproval, string rejectionReason = null)
-        {
-            var request = await GetRequestOrThrow(requestId);
-
-            request.Rejection = BuildRejectionMessage(requestApproval, "Training verification", rejectionReason);
-            request.UpdateStatus();
-
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
-
-        private async Task<Request> GetRequestOrThrow(int requestId)
+        private async Task<Request> GetRequest(int requestId)
         {
             var request = await _context.Requests
-                .FirstOrDefaultAsync(r => r.Id == requestId);
+                .FindAsync(requestId);
 
             if (request == null)
                 throw new KeyNotFoundException($"Request with Id {requestId} was not found.");
@@ -299,44 +389,12 @@ namespace Ellipse.Core
             return request;
         }
 
-        // Builds a RequestApproval entity from the caller-supplied details.
-        // Assumes RequestApprovalDetails exposes Name, Surname, PostId and
-        // ServiceNumber, matching the RequestApproval entity; adjust property
-        // names here if your DTO differs.
-        private static RequestApproval BuildApprovalEntity(RequestApprovalDetails requestApproval, Request request, ApprovalType approvalType)
+        private static RequestApproverAction BuildApproverActionEntity(RequestApproverActionDetails requestApprover, Request request, ApproverType approverType, ApproverActionType approverActionType)
         {
-            if (requestApproval == null)
-                throw new ArgumentException("RequestApprovalDetails cannot be null.", nameof(requestApproval));
+            if (requestApprover == null)
+                throw new ArgumentException("RequestApprovalDetails cannot be null.", nameof(requestApprover));
 
-            return new RequestApproval
-            {
-                Name = requestApproval.Name,
-                Surname = requestApproval.Surname,
-                PostId = requestApproval.PostId,
-                ServiceNumber = requestApproval.ServiceNumber,
-                ApprovalDate = DateTime.UtcNow,
-                ApprovalType = approvalType,
-                RequestId = request.Id,
-                Request = request
-            };
-        }
-
-        // Builds the text stored in Request.Rejection - the only place a
-        // rejection reason/stage can currently be recorded, since Request has
-        // no per-stage rejection flag or reason column.
-        private static string BuildRejectionMessage(RequestApprovalDetails requestApproval, string stage, string rejectionReason)
-        {
-            var rejectedBy = requestApproval != null
-                ? $"{requestApproval.Name} {requestApproval.Surname}".Trim()
-                : null;
-
-            var prefix = string.IsNullOrEmpty(rejectedBy)
-                ? $"{stage} rejection"
-                : $"{stage} rejection by {rejectedBy}";
-
-            return string.IsNullOrWhiteSpace(rejectionReason)
-                ? $"{prefix}."
-                : $"{prefix}: {rejectionReason}";
+            return requestApprover.ToEntity(request, approverType, approverActionType);
         }
     }
 }

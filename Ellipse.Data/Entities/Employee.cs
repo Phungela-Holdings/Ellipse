@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ellipse.Data.Entities
 {
     public class Employee
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string EmailAddress { get; set; }
 
         public int PostId { get; set; }
@@ -26,6 +28,8 @@ namespace Ellipse.Data.Entities
         public string ActiveDirectoryUsername { get; set; }
 
         public bool IsActive { get; set; }
+
+        public string ResponsibleManager { get; set; }
 
         public List<Request> Requests { get; set; }
     }

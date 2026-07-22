@@ -1,6 +1,6 @@
 ﻿using Ellipse.Core.Extensions;
 using Ellipse.Data;
-using Ellipse.Shared.DTOs;
+using Ellipse.Shared.DTOs.RequestApproverAction;
 using Ellipse.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,24 +15,13 @@ namespace Ellipse.Core
             _context = context;
         }
 
-        public async Task<bool> CreateApproverActionAsync(RequestApproverActionDetails requestApproverActionDetails)
-        {
-            var requestApproverAction = requestApproverActionDetails.ToEntity();
-
-            await _context.RequestApproverActions.AddAsync(requestApproverAction);
-
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
-
         public async Task<List<RequestApproverActionDetails>> GetApproverActionForRequestAsync(int requestId)
         {
             var approvals = await _context.RequestApproverActions
                                           .Where(x => x.RequestId == requestId)
                                           .ToListAsync();
 
-            return approvals.ToListDetails();
+            return approvals.ToDetailsList();
         }
     }
 }

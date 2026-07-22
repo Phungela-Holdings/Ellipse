@@ -10,24 +10,17 @@ namespace Ellipse.Core.Extensions
             return new EmployeeDetails
             {
                 EmailAddress = employee.EmailAddress,
-
                 PostId = employee.PostId,
-
-                Surname=employee.Surname,
-
-                FirstName=employee.FirstName,
-
-                ContactNumber=employee.ContactNumber,
-
-                ServiceNumber=employee.ServiceNumber,
-
-                Department=employee.Department,
-
-                Branch=employee.Branch,
-
-                Designation=employee.Designation,
-
-                ActiveDirectoryUsername=employee.ActiveDirectoryUsername,
+                Surname = employee.Surname,
+                FirstName = employee.FirstName,
+                ContactNumber = employee.ContactNumber,
+                ServiceNumber = employee.ServiceNumber,
+                Department = employee.Department,
+                Branch = employee.Branch,
+                Designation = employee.Designation,
+                ActiveDirectoryUsername = employee.ActiveDirectoryUsername,
+                ResponsibleManager = employee.ResponsibleManager,
+                Requests = employee.Requests.Select(o => o.ToSummary()).ToList(),
             };
         }
         public static Employee ToEntity(this EmployeeDetails employee)
@@ -35,26 +28,18 @@ namespace Ellipse.Core.Extensions
             return new Employee
             {
                 EmailAddress = employee.EmailAddress,
-
                 PostId = employee.PostId,
-
                 Surname = employee.Surname,
-
                 FirstName = employee.FirstName,
-
                 ContactNumber = employee.ContactNumber,
-
                 ServiceNumber = employee.ServiceNumber,
-
                 Department = employee.Department,
-
                 Branch = employee.Branch,
-
                 Designation = employee.Designation,
-
                 ActiveDirectoryUsername = employee.ActiveDirectoryUsername,
             };
         }
+
         public static EmployeeSummary ToSummary(this Employee employee)
         {
             return new EmployeeSummary
@@ -69,11 +54,6 @@ namespace Ellipse.Core.Extensions
 
                 Department = employee.Department,
             };
-        }
-
-        public static List<EmployeeDetails> ToListDetails(this List<Employee> employees)
-        {
-            return employees.Select(employee => employee.ToDetails()).ToList();
         }
     }
 }

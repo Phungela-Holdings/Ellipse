@@ -1,8 +1,7 @@
 ﻿using Ellipse.Core.Extensions;
 using Ellipse.Data;
-using Ellipse.Shared.DTOs.Contract;
+using Ellipse.Shared.DTOs.Contractor;
 using Ellipse.Shared.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ellipse.Core
 {
@@ -66,6 +65,7 @@ namespace Ellipse.Core
             {
                 return false;
             }
+
             contractor.Active = false;
             await _context.SaveChangesAsync();
 

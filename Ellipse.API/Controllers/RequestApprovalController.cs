@@ -1,4 +1,4 @@
-﻿using Ellipse.Shared.DTOs;
+﻿using Ellipse.Shared.DTOs.RequestApproverAction;
 using Ellipse.Shared.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,21 +17,6 @@ namespace Ellipse.API.Controllers
         {
             _requestApproverActionService = requestApproverActionService;
             _logger = logger;
-        }
-
-        [HttpPost]
-        public ActionResult<bool> CreateApprovals(RequestApproverActionDetails requestApproverActionDetails)
-        {
-            try
-            {
-                var result = _requestApproverActionService.CreateApproverActionAsync(requestApproverActionDetails);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex, "An error occurred while creating request approval.");
-                throw;
-            }
         }
 
         [HttpGet]

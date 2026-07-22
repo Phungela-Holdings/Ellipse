@@ -2,7 +2,7 @@
 using Ellipse.Core.Extensions;
 using Ellipse.Data;
 using Ellipse.Shared.Interfaces;
-using Ellipse.Shared.DTOs.DocumentDetails;
+using Ellipse.Shared.DTOs.Document;
 
 namespace Ellipse.Core
 {
@@ -13,18 +13,6 @@ namespace Ellipse.Core
         public DocumentService(EllipseDbContext context)
         {
             _context = context;
-        }
-
-        public async Task<DocumentDetails> CreateDocument(DocumentDetails documentDetails)
-        {
-            var document = documentDetails.ToEntity();
-
-
-            _context.Documents.Add(document);
-
-            await _context.SaveChangesAsync();
-
-            return document.ToDetails();
         }
 
         public async Task<DocumentDetails> GetDocumentById(int documentId)
@@ -42,7 +30,7 @@ namespace Ellipse.Core
                 .Where(d => d.RequestId == requestId)
                 .ToListAsync();
 
-            return documents.ToListDetails();
+            return documents.ToDetailsList();
         }
 
         public async Task<DocumentDetails> UpdateDocument(

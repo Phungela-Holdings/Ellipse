@@ -1,4 +1,4 @@
-﻿using Ellipse.Shared.DTOs.Contract;
+﻿using Ellipse.Shared.DTOs.Contractor;
 using Ellipse.Shared.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
