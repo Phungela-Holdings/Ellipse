@@ -59,7 +59,7 @@ namespace Ellipse.Core
                 return false;
             }
 
-            document.Active = false;
+            document.IsActive = false;
 
             await _context.SaveChangesAsync();
 

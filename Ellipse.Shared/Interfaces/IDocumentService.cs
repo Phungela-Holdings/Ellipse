@@ -1,4 +1,4 @@
-﻿using Ellipse.Shared.DTOs.Document;
+using Ellipse.Shared.DTOs.Document;
 
 namespace Ellipse.Shared.Interfaces
 {
