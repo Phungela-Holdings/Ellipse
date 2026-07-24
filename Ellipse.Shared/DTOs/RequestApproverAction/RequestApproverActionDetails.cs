@@ -19,5 +19,7 @@
         public string ApproverType { get; set; }
 
         public string ActionType { get; set; }
+
+        public string? RejectionReason { get; set; }
     }
 }

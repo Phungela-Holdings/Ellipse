@@ -1,11 +1,10 @@
 ﻿using Ellipse.Shared.DTOs.Contractor;
 using Ellipse.Shared.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ellipse.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]/")]
     [ApiController]
     public class ContractorController : ControllerBase
     {
@@ -20,7 +19,6 @@ namespace Ellipse.API.Controllers
             _logger = logger;
         }
 
-        // POST: api/contractors
         [HttpPost]
         public async Task<ActionResult> CreateContractor([FromBody] ContractorDetails contractorDetails)
         {
@@ -35,7 +33,7 @@ namespace Ellipse.API.Controllers
                 throw;
             }
         }
-        // GET: api/contractors/{id}
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ContractorDetails>> GetContractorById(int id)
         {
@@ -57,7 +55,6 @@ namespace Ellipse.API.Controllers
             }
         }
 
-        // PUT: api/contractors
         [HttpPut]
         public async Task<ActionResult> UpdateContractor([FromBody] ContractorDetails contractorDetails)
         {
@@ -79,7 +76,6 @@ namespace Ellipse.API.Controllers
             }
         }
 
-            // DELETE: api/contractors/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteContractor(int id)
         {

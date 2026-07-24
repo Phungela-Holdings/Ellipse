@@ -74,7 +74,7 @@ namespace Ellipse.Core
                         var contractorServices = new ContractorServices(_context);
                         await contractorServices.UpdateContractorAsync(newRequestDetails.ContractorDetails);
                     }
-                    
+
                     request.Contractor = contractor;
                 }
 
@@ -160,9 +160,9 @@ namespace Ellipse.Core
             return request.ToDetails();
         }
 
-        public async Task<bool> LineManagerRequestApproval(int requestId, RequestApproverActionDetails requestApproverAction)
+        public async Task<bool> LineManagerRequestApproval(RequestApproverActionDetails requestApproverAction)
         {
-            var request = await GetRequest(requestId);
+            var request = await GetRequest(requestApproverAction.RequestId);
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -187,9 +187,9 @@ namespace Ellipse.Core
             }
         }
 
-        public async Task<bool> LineManagerRequestRejection(int requestId, RequestApproverActionDetails requestApproverAction, string rejectionReason)
+        public async Task<bool> LineManagerRequestRejection(RequestApproverActionDetails requestApproverAction)
         {
-            var request = await GetRequest(requestId);
+            var request = await GetRequest(requestApproverAction.RequestId);
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -199,7 +199,7 @@ namespace Ellipse.Core
                 await _context.RequestApproverActions.AddAsync(approverAction);
                 await _context.SaveChangesAsync();
 
-                request.RejectionReason = rejectionReason;
+                request.RejectionReason = requestApproverAction.RejectionReason;
                 request.UpdateStatus();
 
                 await _context.SaveChangesAsync();
@@ -214,9 +214,9 @@ namespace Ellipse.Core
             }
         }
 
-        public async Task<bool> ICTManagerRequestApproval(int requestId, RequestApproverActionDetails requestApprover)
+        public async Task<bool> ICTManagerRequestApproval(RequestApproverActionDetails requestApprover)
         {
-            var request = await GetRequest(requestId);
+            var request = await GetRequest(requestApprover.RequestId);
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -240,9 +240,9 @@ namespace Ellipse.Core
             }
         }
 
-        public async Task<bool> ICTManagerRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason)
+        public async Task<bool> ICTManagerRequestRejection(RequestApproverActionDetails requestApprover)
         {
-            var request = await GetRequest(requestId);
+            var request = await GetRequest(requestApprover.RequestId);
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -252,7 +252,7 @@ namespace Ellipse.Core
                 await _context.RequestApproverActions.AddAsync(approver);
                 await _context.SaveChangesAsync();
 
-                request.RejectionReason = rejectionReason;
+                request.RejectionReason = requestApprover.RejectionReason;
                 request.UpdateStatus();
 
                 await _context.SaveChangesAsync();
@@ -267,9 +267,9 @@ namespace Ellipse.Core
             }
         }
 
-        public async Task<bool> HcSystemsAdminRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason)
+        public async Task<bool> HcSystemsAdminRequestRejection(RequestApproverActionDetails requestApprover)
         {
-            var request = await GetRequest(requestId);
+            var request = await GetRequest(requestApprover.RequestId);
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -279,7 +279,7 @@ namespace Ellipse.Core
                 await _context.RequestApproverActions.AddAsync(approver);
                 await _context.SaveChangesAsync();
 
-                request.RejectionReason = rejectionReason;
+                request.RejectionReason = requestApprover.RejectionReason;
                 request.UpdateStatus();
 
                 await _context.SaveChangesAsync();
@@ -293,9 +293,9 @@ namespace Ellipse.Core
             }
         }
 
-        public async Task<bool> TrainingCenterRequestVerification(int requestId, RequestApproverActionDetails requestApprover, DateTime trainingDate, string verifiedBy)
+        public async Task<bool> TrainingCenterRequestVerification(RequestApproverActionDetails requestApprover, DateTime trainingDate, string verifiedBy)
         {
-            var request = await GetRequest(requestId);
+            var request = await GetRequest(requestApprover.RequestId);
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -322,9 +322,9 @@ namespace Ellipse.Core
         }
 
 
-        public async Task<bool> HcOfficerRequestImplementation(int requestId, RequestApproverActionDetails requestApprover, DateTime accessImplementationDate, long ellipseUserId)
+        public async Task<bool> HcOfficerRequestImplementation(RequestApproverActionDetails requestApprover, DateTime accessImplementationDate, long ellipseUserId)
         {
-            var request = await GetRequest(requestId);
+            var request = await GetRequest(requestApprover.RequestId);
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -351,9 +351,9 @@ namespace Ellipse.Core
             }
         }
 
-        public async Task<bool> UnverifiedTraining(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason = null)
+        public async Task<bool> UnverifiedTraining(RequestApproverActionDetails requestApprover)
         {
-            var request = await GetRequest(requestId);
+            var request = await GetRequest(requestApprover.RequestId);
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -363,7 +363,7 @@ namespace Ellipse.Core
                 await _context.RequestApproverActions.AddAsync(approver);
                 await _context.SaveChangesAsync();
 
-                request.RejectionReason = rejectionReason;
+                request.RejectionReason = requestApprover.RejectionReason;
                 request.UpdateStatus();
 
                 await _context.SaveChangesAsync();

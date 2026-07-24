@@ -1,11 +1,10 @@
 ﻿using Ellipse.Shared.DTOs.Employee;
 using Ellipse.Shared.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ellipse.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]/")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {

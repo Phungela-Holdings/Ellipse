@@ -15,20 +15,20 @@ namespace Ellipse.Shared.Interfaces
 
         Task<RequestDetails> UpdateRequest(RequestDetails requestDetails);
 
-        Task<bool> LineManagerRequestApproval(int requestId, RequestApproverActionDetails requestApprover);
+        Task<bool> LineManagerRequestApproval(RequestApproverActionDetails requestApprover);
 
-        Task<bool> LineManagerRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason);
+        Task<bool> LineManagerRequestRejection(RequestApproverActionDetails requestApprover);
 
-        Task<bool> ICTManagerRequestApproval(int requestId, RequestApproverActionDetails requestApprover);
+        Task<bool> ICTManagerRequestApproval(RequestApproverActionDetails requestApprover);
 
-        Task<bool> ICTManagerRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason);
+        Task<bool> ICTManagerRequestRejection(RequestApproverActionDetails requestApprover);
 
-        Task<bool> TrainingCenterRequestVerification(int requestId, RequestApproverActionDetails requestApprover, DateTime trainingDate, string verifiedBy);
+        Task<bool> TrainingCenterRequestVerification(RequestApproverActionDetails requestApprover, DateTime trainingDate, string verifiedBy);
 
-        Task<bool> UnverifiedTraining(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason);
+        Task<bool> UnverifiedTraining(RequestApproverActionDetails requestApprover);
 
-        Task<bool> HcOfficerRequestImplementation(int requestId, RequestApproverActionDetails requestApprover, DateTime accessImplementationDate, long ellipseUserId);
+        Task<bool> HcOfficerRequestImplementation(RequestApproverActionDetails requestApprover, DateTime accessImplementationDate, long ellipseUserId);
 
-        Task<bool> HcSystemsAdminRequestRejection(int requestId, RequestApproverActionDetails requestApprover, string rejectionReason);
+        Task<bool> HcSystemsAdminRequestRejection(RequestApproverActionDetails requestApprover);
     }
 }
